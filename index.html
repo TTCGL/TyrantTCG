@@ -1295,7 +1295,11 @@
     e.preventDefault();
     const data = new FormData(feedbackForm);
     try {
-      const res = await fetch('/', { method: 'POST', body: data });
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString()
+      });
       if (res.ok) {
         feedbackForm.style.display = 'none';
         feedbackThanks.style.display = 'block';
