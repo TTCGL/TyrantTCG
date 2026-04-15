@@ -432,8 +432,8 @@
 
     .reviews-card-header {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: 0.4rem;
       margin-bottom: 1.25rem;
     }
 
@@ -442,7 +442,8 @@
       font-size: 0.88rem;
       font-weight: 700;
       color: var(--gold);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
+      line-height: 1.4;
     }
 
     .reviews-total {
@@ -1194,15 +1195,6 @@
       <!-- ── LEFT PANEL ── -->
       <aside class="left-panel">
 
-        <!-- Reviews -->
-        <div class="reviews-card">
-          <div class="reviews-card-header">
-            <div class="reviews-card-title">Customer Feedback</div>
-            <div class="reviews-total">270+ Ratings</div>
-          </div>
-          <div class="reviews-list" id="reviews-list"></div>
-        </div>
-
         <!-- Why Buy From Us -->
         <div class="why-buy">
           <div class="why-buy-title">Why Buy From Us</div>
@@ -1239,6 +1231,15 @@
             </div>
 
           </div>
+        </div>
+
+        <!-- Reviews -->
+        <div class="reviews-card">
+          <div class="reviews-card-header">
+            <div class="reviews-card-title">Don't just take my word for it — see what buyers like YOU have said.</div>
+            <div class="reviews-total">270+ Ratings</div>
+          </div>
+          <div class="reviews-list" id="reviews-list"></div>
         </div>
 
         <!-- Social label -->
