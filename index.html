@@ -81,6 +81,36 @@
 
     nav a:hover { color: var(--gold); }
 
+    /* ── CONSTRUCTION NOTICE ── */
+    .construction-notice {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(201, 168, 76, 0.08);
+      border: 1px solid var(--gold-dark);
+      border-radius: 6px;
+      padding: 0.5rem 0.9rem;
+      max-width: 340px;
+    }
+
+    .construction-icon {
+      font-size: 0.9rem;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .construction-text {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 900px) {
+      .construction-notice { display: none; }
+    }
+
     /* ── NAV EMAIL SIGNUP ── */
     .nav-signup {
       display: flex;
@@ -1195,6 +1225,10 @@
       <a href="#" class="logo">
         <img src="tyrant-tcg-logo-emblem.png" alt="Tyrant TCG Limited" class="logo-img" />
       </a>
+      <div class="construction-notice">
+        <span class="construction-icon">⚠</span>
+        <span class="construction-text">This website is currently under construction. Some features may be incomplete or subject to change.</span>
+      </div>
       <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">&#9776;</button>
       <nav id="mainNav">
         <a href="#main">Recently Listed</a>
