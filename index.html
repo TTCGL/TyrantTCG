@@ -1434,7 +1434,7 @@
       const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
       const idx = h => headers.indexOf(h);
 
-      const reviews = lines.slice(1).slice(0, 3).map(line => {
+      const reviews = lines.slice(1).slice(0, 10).map(line => {
         const cols = parseCSVLine(line);
         return {
           rating:  parseInt((cols[idx('rating')] || '5').trim(), 10),
