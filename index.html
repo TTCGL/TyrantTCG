@@ -848,6 +848,40 @@
     .dot-holo    { background: radial-gradient(#fff, #aaf); box-shadow: 0 0 6px #ccf; }
     .dot-common  { background: radial-gradient(#aaa, #666); box-shadow: 0 0 4px #555; }
 
+    /* ── SOCIAL SECTION ── */
+    .social-section {
+      background: var(--surface);
+      position: relative;
+    }
+
+    .social-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+    }
+
+    .social-section-header {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 1.25rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .social-row .social-pill {
+      flex: 1;
+      min-width: 200px;
+      max-width: 280px;
+    }
+
     /* ── CONTACT SECTION ── */
     .contact-section {
       background: var(--surface);
@@ -1242,49 +1276,6 @@
           <div class="reviews-list" id="reviews-list"></div>
         </div>
 
-        <!-- Social label -->
-        <div class="social-stack-label">Follow Us</div>
-
-        <!-- Social pills -->
-        <div class="social-stack">
-
-          <div class="social-pill yt">
-            <div class="social-pill-icon">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
-              </svg>
-            </div>
-            <div class="social-pill-info">
-              <div class="social-pill-name">YouTube</div>
-              <div class="social-pill-status">Coming Soon</div>
-            </div>
-          </div>
-
-          <div class="social-pill tt">
-            <div class="social-pill-icon">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
-              </svg>
-            </div>
-            <div class="social-pill-info">
-              <div class="social-pill-name">TikTok</div>
-              <div class="social-pill-status">Coming Soon</div>
-            </div>
-          </div>
-
-          <div class="social-pill fb">
-            <div class="social-pill-icon">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-            </div>
-            <div class="social-pill-info">
-              <div class="social-pill-name">Facebook</div>
-              <div class="social-pill-status">Coming Soon</div>
-            </div>
-          </div>
-
-        </div>
       </aside>
 
       <!-- ── RIGHT PANEL — 4 GAME SECTIONS ── -->
@@ -1328,6 +1319,54 @@
             <div class="game-tag">Recently Listed</div>
           </div>
           <div class="cards-grid" id="grid-fab"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ SOCIAL ════════════ -->
+  <section class="social-section">
+    <div class="section-inner">
+      <div class="social-section-header">
+        <div class="social-stack-label">Follow Us</div>
+      </div>
+      <div class="social-row">
+
+        <div class="social-pill yt">
+          <div class="social-pill-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
+            </svg>
+          </div>
+          <div class="social-pill-info">
+            <div class="social-pill-name">YouTube</div>
+            <div class="social-pill-status">Coming Soon</div>
+          </div>
+        </div>
+
+        <div class="social-pill tt">
+          <div class="social-pill-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
+            </svg>
+          </div>
+          <div class="social-pill-info">
+            <div class="social-pill-name">TikTok</div>
+            <div class="social-pill-status">Coming Soon</div>
+          </div>
+        </div>
+
+        <div class="social-pill fb">
+          <div class="social-pill-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </div>
+          <div class="social-pill-info">
+            <div class="social-pill-name">Facebook</div>
+            <div class="social-pill-status">Coming Soon</div>
+          </div>
         </div>
 
       </div>
