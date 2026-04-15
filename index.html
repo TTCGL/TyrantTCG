@@ -954,8 +954,39 @@
       .social-pill { flex: 1; }
     }
 
+    /* ── HAMBURGER BUTTON ── */
+    .hamburger {
+      display: none;
+      background: none;
+      border: 1px solid var(--gold-dark);
+      border-radius: 4px;
+      color: var(--gold);
+      cursor: pointer;
+      font-size: 1.3rem;
+      line-height: 1;
+      padding: 7px 11px;
+    }
+
     @media (max-width: 768px) {
-      nav { display: none; }
+      .hamburger { display: block; }
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(8, 8, 8, 0.97);
+        border-bottom: 1px solid var(--gold-dark);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem 2rem;
+        flex-direction: column;
+        gap: 1.25rem;
+        z-index: 99;
+      }
+      nav.open { display: flex; }
+      nav a { margin-left: 0; font-size: 1rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+      .nav-signup { margin-left: 0; width: 100%; }
+      .nav-signup input[type="email"] { flex: 1; width: auto; }
       .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; padding: 0.75rem; }
       .left-panel { flex-direction: column; }
@@ -977,7 +1008,8 @@
       <a href="#" class="logo">
         <img src="Tyrant TCG logo with crown emblem.png" alt="Tyrant TCG Limited" class="logo-img" />
       </a>
-      <nav>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">&#9776;</button>
+      <nav id="mainNav">
         <a href="#main">Showcase</a>
         <a href="#contact">Contact</a>
         <form class="nav-signup" id="navSignupForm" action="https://formspree.io/f/mojyqzpg" method="POST">
@@ -1278,6 +1310,16 @@
 
 
 <script>
+  // Hamburger menu
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mainNav = document.getElementById('mainNav');
+  if (hamburgerBtn && mainNav) {
+    hamburgerBtn.addEventListener('click', () => mainNav.classList.toggle('open'));
+    mainNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mainNav.classList.remove('open'));
+    });
+  }
+
   // Feedback modal
   const feedbackBtn = document.getElementById('feedbackBtn');
   const feedbackOverlay = document.getElementById('feedbackOverlay');
