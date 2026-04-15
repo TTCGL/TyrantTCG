@@ -81,6 +81,83 @@
 
     nav a:hover { color: var(--gold); }
 
+    /* ── CONSTRUCTION MOBILE BUTTON ── */
+    .construction-mobile-btn {
+      display: none;
+      background: rgba(201, 168, 76, 0.08);
+      border: 1px solid var(--gold-dark);
+      border-radius: 6px;
+      color: var(--gold);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 7px 10px;
+      line-height: 1;
+    }
+
+    @media (max-width: 900px) {
+      .construction-mobile-btn { display: block; }
+    }
+
+    /* ── CONSTRUCTION POPUP ── */
+    .construction-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .construction-overlay.open { display: flex; }
+
+    .construction-popup {
+      background: var(--surface);
+      border: 1px solid var(--gold-dark);
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 360px;
+      width: 100%;
+      position: relative;
+      text-align: center;
+    }
+
+    .construction-popup-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .construction-popup-icon {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .construction-popup-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .construction-popup-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+    }
+
+    .construction-popup-text strong { color: var(--gold); }
+
     /* ── CONSTRUCTION NOTICE ── */
     .construction-notice {
       display: flex;
@@ -1229,6 +1306,7 @@
         <span class="construction-icon">⚠</span>
         <span class="construction-text">This website is currently under construction. Some features may be incomplete or subject to change.</span>
       </div>
+      <button class="construction-mobile-btn" id="constructionBtn" aria-label="Site notice">⚠</button>
       <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">&#9776;</button>
       <nav id="mainNav">
         <a href="#main">Recently Listed</a>
@@ -1452,6 +1530,17 @@
     </div>
   </section>
 
+  <!-- ════════════ CONSTRUCTION POPUP ════════════ -->
+  <div class="construction-overlay" id="constructionOverlay">
+    <div class="construction-popup">
+      <button class="construction-popup-close" id="constructionClose">&times;</button>
+      <div class="construction-popup-icon">⚠</div>
+      <h3 class="construction-popup-title">Under Construction</h3>
+      <p class="construction-popup-text">This website is currently under construction. Some features may be incomplete or subject to change.</p>
+      <p class="construction-popup-text">Want to give input and possibly have your idea implemented? Hit the <strong>Feedback</strong> button and let me know!</p>
+    </div>
+  </div>
+
   <!-- ════════════ FEEDBACK BUTTON & MODAL ════════════ -->
   <button class="feedback-fab" id="feedbackBtn">Feedback</button>
 
@@ -1616,6 +1705,18 @@
   }
 
   loadRecentCards();
+
+  // Construction notice popup
+  const constructionBtn = document.getElementById('constructionBtn');
+  const constructionOverlay = document.getElementById('constructionOverlay');
+  const constructionClose = document.getElementById('constructionClose');
+  if (constructionBtn && constructionOverlay) {
+    constructionBtn.addEventListener('click', () => constructionOverlay.classList.add('open'));
+    constructionClose.addEventListener('click', () => constructionOverlay.classList.remove('open'));
+    constructionOverlay.addEventListener('click', e => {
+      if (e.target === constructionOverlay) constructionOverlay.classList.remove('open');
+    });
+  }
 
   // Hamburger menu
   const hamburgerBtn = document.getElementById('hamburgerBtn');
