@@ -422,6 +422,71 @@
 
     .tcg-cta-btn::after { content: '↗'; font-size: 0.9em; }
 
+    /* ── REVIEWS CARD ── */
+    .reviews-card {
+      padding: 1.75rem;
+      background: var(--surface2);
+      border: 1px solid var(--gold-dark);
+      border-radius: 10px;
+    }
+
+    .reviews-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .reviews-card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+    }
+
+    .reviews-total {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .review-item {
+      padding: 0.85rem 1rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+    }
+
+    .review-stars {
+      color: var(--gold);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .review-comment {
+      font-size: 0.8rem;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 0.4rem;
+    }
+
+    .review-date {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
     /* ── WHY BUY FROM US ── */
     .why-buy {
       padding: 1.75rem;
@@ -1129,6 +1194,15 @@
       <!-- ── LEFT PANEL ── -->
       <aside class="left-panel">
 
+        <!-- Reviews -->
+        <div class="reviews-card">
+          <div class="reviews-card-header">
+            <div class="reviews-card-title">Customer Feedback</div>
+            <div class="reviews-total">270+ Ratings</div>
+          </div>
+          <div class="reviews-list" id="reviews-list"></div>
+        </div>
+
         <!-- Why Buy From Us -->
         <div class="why-buy">
           <div class="why-buy-title">Why Buy From Us</div>
@@ -1149,8 +1223,8 @@
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7z"/></svg>
               </div>
               <div>
-                <div class="why-buy-label">Safe Packaging</div>
-                <div class="why-buy-desc">Every card is carefully packed to arrive in exactly the condition you expect.</div>
+                <div class="why-buy-label">Protected &amp; Pristine</div>
+                <div class="why-buy-desc">Sleeved, top-loaded, and packed so nothing moves in transit.</div>
               </div>
             </div>
 
@@ -1348,6 +1422,45 @@
 
 
 <script>
+  // ── CUSTOMER FEEDBACK (loaded from feedback.csv) ──
+  async function loadFeedback() {
+    try {
+      const res = await fetch('feedback.csv');
+      if (!res.ok) return;
+      const text = await res.text();
+      const lines = text.trim().split('\n').filter(l => l.trim());
+      if (lines.length < 2) return;
+
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      const idx = h => headers.indexOf(h);
+
+      const reviews = lines.slice(1).slice(0, 3).map(line => {
+        const cols = parseCSVLine(line);
+        return {
+          rating:  parseInt((cols[idx('rating')] || '5').trim(), 10),
+          comment: (cols[idx('comment')] || '').trim(),
+          date:    (cols[idx('date')]    || '').trim(),
+        };
+      }).filter(r => r.comment);
+
+      const list = document.getElementById('reviews-list');
+      if (!list || reviews.length === 0) return;
+
+      list.innerHTML = reviews.map(r => {
+        const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+        return `<div class="review-item">
+          <div class="review-stars">${stars}</div>
+          <div class="review-comment">${r.comment}</div>
+          ${r.date ? `<div class="review-date">${r.date}</div>` : ''}
+        </div>`;
+      }).join('');
+    } catch (e) {
+      console.error('Could not load feedback.csv:', e);
+    }
+  }
+
+  loadFeedback();
+
   // ── RECENTLY LISTED CARDS (loaded from cards.csv) ──
   function parseCSVLine(line) {
     const result = [];
