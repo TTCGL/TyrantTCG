@@ -1045,8 +1045,8 @@
     /* ── FEEDBACK BUTTON ── */
     .feedback-fab {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
+      bottom: max(2rem, env(safe-area-inset-bottom, 2rem));
+      right: max(2rem, env(safe-area-inset-right, 2rem));
       z-index: 200;
       background: linear-gradient(135deg, var(--gold-dark), var(--gold));
       color: var(--black);
@@ -1085,13 +1085,15 @@
       padding: 2.5rem;
       width: 100%;
       max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
       position: relative;
     }
 
     .feedback-modal-close {
       position: absolute;
-      top: 1rem;
-      right: 1.2rem;
+      top: 0.5rem;
+      right: 0.6rem;
       background: none;
       border: none;
       color: var(--text-muted);
@@ -1099,6 +1101,12 @@
       cursor: pointer;
       line-height: 1;
       transition: color 0.2s;
+      padding: 8px 12px;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .feedback-modal-close:hover { color: var(--gold); }
 
@@ -1160,6 +1168,7 @@
       transition: filter 0.2s;
     }
     .feedback-submit:hover { filter: brightness(1.15); }
+    .feedback-submit:disabled { opacity: 0.6; cursor: not-allowed; filter: none; }
 
     .feedback-thanks {
       text-align: center;
@@ -1556,8 +1565,7 @@
       <button class="feedback-modal-close" id="feedbackClose">&times;</button>
       <h3>Leave Feedback</h3>
       <p>I'd love to hear your thoughts — good or bad!</p>
-      <form id="feedbackForm" name="feedback" method="POST" data-netlify="true">
-        <input type="hidden" name="form-name" value="feedback" />
+      <form id="feedbackForm" action="https://formspree.io/f/mojyqzpg" method="POST">
         <div class="feedback-field">
           <label for="fb-name">Your Name</label>
           <input type="text" id="fb-name" name="name" placeholder="Optional" />
@@ -1750,12 +1758,15 @@
 
   feedbackForm.addEventListener('submit', async function(e) {
     e.preventDefault();
+    const submitBtn = feedbackForm.querySelector('.feedback-submit');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
     const data = new FormData(feedbackForm);
     try {
-      const res = await fetch('/', {
+      const res = await fetch(feedbackForm.action, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString()
+        body: data,
+        headers: { 'Accept': 'application/json' }
       });
       if (res.ok) {
         feedbackForm.style.display = 'none';
@@ -1765,11 +1776,17 @@
           feedbackForm.style.display = 'block';
           feedbackThanks.style.display = 'none';
           feedbackForm.reset();
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Feedback';
         }, 2500);
       } else {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Feedback';
         alert('Something went wrong. Please try again.');
       }
     } catch {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Feedback';
       alert('Something went wrong. Please try again.');
     }
   });
