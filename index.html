@@ -1182,6 +1182,8 @@
       font-size: 0.95rem;
       font-weight: 600;
       color: var(--gold);
+      overflow-wrap: break-word;
+      word-break: break-all;
     }
 
     .contact-blurb {
@@ -1243,6 +1245,7 @@
     @media (max-width: 900px) {
       .main-layout { grid-template-columns: 1fr; }
       .left-panel { position: static; flex-direction: row; flex-wrap: wrap; }
+      .why-buy, .reviews-card { flex: 1; min-width: 280px; }
       .tcg-cta { flex: 1; min-width: 260px; }
       .social-stack { flex-direction: row; flex: 1; min-width: 260px; }
       .social-pill { flex: 1; }
@@ -1262,7 +1265,11 @@
     }
 
     @media (max-width: 768px) {
-      .hamburger { display: block; }
+      .header-inner { height: 68px; padding: 0 1.25rem; }
+      .logo-img { height: 50px; }
+      .hero { padding: 90px 1.25rem 60px; }
+      .hamburger { display: block; min-height: 44px; }
+      .construction-mobile-btn { min-height: 44px; }
       nav {
         display: none;
         position: absolute;
