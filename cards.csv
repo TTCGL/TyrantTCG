@@ -1,0 +1,9 @@
+game,name,set,rarity,price,url
+mtg,Example MTG Card,Bloomburrow,Rare,£3.99,https://www.tcgplayer.com/product/12345
+mtg,Example MTG Card 2,Duskmourn,Mythic Rare,£12.99,https://www.tcgplayer.com/product/12345
+pkm,Example Pokemon Card,Stellar Crown,Holo Rare,£5.99,https://www.tcgplayer.com/product/12345
+pkm,Example Pokemon Card 2,Twilight Masquerade,Ultra Rare,£18.99,https://www.tcgplayer.com/product/12345
+ygo,Example YGO Card,Phantom Nightmare,Ultra Rare,£2.99,https://www.tcgplayer.com/product/12345
+ygo,Example YGO Card 2,Legacy of Destruction,Secret Rare,£9.99,https://www.tcgplayer.com/product/12345
+fab,Example FAB Card,Rosetta,Majestic,£7.99,https://www.tcgplayer.com/product/12345
+fab,Example FAB Card 2,Part the Mistveil,Legendary,£24.99,https://www.tcgplayer.com/product/12345

@@ -577,8 +577,8 @@
     /* ── CARDS GRID ── */
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
       padding: 1.25rem;
     }
 
@@ -593,6 +593,25 @@
       transition: transform 0.3s, box-shadow 0.3s;
       display: flex;
       flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card-price {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      margin-top: 1px;
+    }
+
+    .no-cards {
+      grid-column: 1 / -1;
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
     }
 
     .card:hover {
@@ -988,7 +1007,7 @@
       .nav-signup { margin-left: 0; width: 100%; }
       .nav-signup input[type="email"] { flex: 1; width: auto; }
       .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; padding: 0.75rem; }
+      .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; padding: 0.75rem; }
       .left-panel { flex-direction: column; }
       .social-stack { flex-direction: column; }
     }
@@ -1118,25 +1137,9 @@
           <div class="game-header">
             <div class="game-icon">✦</div>
             <div class="game-title">Magic: The Gathering</div>
-            <div class="game-tag">In Stock</div>
+            <div class="game-tag">Recently Listed</div>
           </div>
-          <div class="cards-grid">
-            <div class="card">
-              <div class="card-dot dot-rare"></div>
-              <div class="card-art"><div class="card-art-bg art-mtg-blue"><div class="card-art-symbol">&#9670;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Teferi, Timebender</div><div class="card-type">Rare · Blue</div></div>
-            </div>
-            <div class="card">
-              <div class="card-dot dot-ultra"></div>
-              <div class="card-art"><div class="card-art-bg art-mtg-black"><div class="card-art-symbol">&#9760;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Sheoldred</div><div class="card-type">Mythic · Black</div></div>
-            </div>
-            <div class="card">
-              <div class="card-dot dot-common"></div>
-              <div class="card-art"><div class="card-art-bg art-mtg-red"><div class="card-art-symbol">&#9733;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Ragavan</div><div class="card-type">Mythic · Red</div></div>
-            </div>
-          </div>
+          <div class="cards-grid" id="grid-mtg"></div>
         </div>
 
         <!-- Pokemon -->
@@ -1144,25 +1147,9 @@
           <div class="game-header">
             <div class="game-icon">⚡</div>
             <div class="game-title">Pokémon</div>
-            <div class="game-tag">In Stock</div>
+            <div class="game-tag">Recently Listed</div>
           </div>
-          <div class="cards-grid">
-            <div class="card">
-              <div class="card-dot dot-holo"></div>
-              <div class="card-art"><div class="card-art-bg art-pkm-fire"><div class="card-art-symbol">&#9728;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Charizard ex</div><div class="card-type">Ultra Rare · Fire</div></div>
-            </div>
-            <div class="card">
-              <div class="card-dot dot-rare"></div>
-              <div class="card-art"><div class="card-art-bg art-pkm-water"><div class="card-art-symbol">&#10052;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Blastoise ex</div><div class="card-type">Rare · Water</div></div>
-            </div>
-            <div class="card">
-              <div class="card-dot dot-secret"></div>
-              <div class="card-art"><div class="card-art-bg art-pkm-psych"><div class="card-art-symbol">&#9670;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Mewtwo ex</div><div class="card-type">Secret · Psychic</div></div>
-            </div>
-          </div>
+          <div class="cards-grid" id="grid-pkm"></div>
         </div>
 
         <!-- Yu-Gi-Oh -->
@@ -1170,25 +1157,9 @@
           <div class="game-header">
             <div class="game-icon">★</div>
             <div class="game-title">Yu-Gi-Oh!</div>
-            <div class="game-tag">In Stock</div>
+            <div class="game-tag">Recently Listed</div>
           </div>
-          <div class="cards-grid">
-            <div class="card">
-              <div class="card-dot dot-ultra"></div>
-              <div class="card-art"><div class="card-art-bg art-ygo-dark"><div class="card-art-symbol">&#9775;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Dark Magician</div><div class="card-type">Ultra Rare · Dark</div></div>
-            </div>
-            <div class="card">
-              <div class="card-dot dot-holo"></div>
-              <div class="card-art"><div class="card-art-bg art-ygo-light"><div class="card-art-symbol">&#9733;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Blue-Eyes White</div><div class="card-type">Secret · Light</div></div>
-            </div>
-            <div class="card">
-              <div class="card-dot dot-rare"></div>
-              <div class="card-art"><div class="card-art-bg art-ygo-spell"><div class="card-art-symbol">&#9752;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Pot of Greed</div><div class="card-type">Rare · Spell</div></div>
-            </div>
-          </div>
+          <div class="cards-grid" id="grid-ygo"></div>
         </div>
 
         <!-- Flesh & Blood -->
@@ -1196,25 +1167,9 @@
           <div class="game-header">
             <div class="game-icon">⚔</div>
             <div class="game-title">Flesh &amp; Blood</div>
-            <div class="game-tag">In Stock</div>
+            <div class="game-tag">Recently Listed</div>
           </div>
-          <div class="cards-grid">
-            <div class="card">
-              <div class="card-dot dot-ultra"></div>
-              <div class="card-art"><div class="card-art-bg art-fab-red"><div class="card-art-symbol">&#9760;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Rhinar</div><div class="card-type">Legendary · Brute</div></div>
-            </div>
-            <div class="card">
-              <div class="card-dot dot-rare"></div>
-              <div class="card-art"><div class="card-art-bg art-fab-blue"><div class="card-art-symbol">&#9670;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Prism</div><div class="card-type">Rare · Illusionist</div></div>
-            </div>
-            <div class="card">
-              <div class="card-dot dot-secret"></div>
-              <div class="card-art"><div class="card-art-bg art-fab-earth"><div class="card-art-symbol">&#9733;</div><div class="card-art-glow"></div></div><div class="card-frame"></div></div>
-              <div class="card-info"><div class="card-name">Lexi</div><div class="card-type">Majestic · Ranger</div></div>
-            </div>
-          </div>
+          <div class="cards-grid" id="grid-fab"></div>
         </div>
 
       </div>
@@ -1310,6 +1265,91 @@
 
 
 <script>
+  // ── RECENTLY LISTED CARDS (loaded from cards.csv) ──
+  function parseCSVLine(line) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      if (line[i] === '"') { inQuotes = !inQuotes; }
+      else if (line[i] === ',' && !inQuotes) { result.push(current); current = ''; }
+      else { current += line[i]; }
+    }
+    result.push(current);
+    return result;
+  }
+
+  function rarityToDot(rarity) {
+    const r = rarity.toLowerCase();
+    if (r.includes('secret') || r.includes('rainbow') || r.includes('full art') || r.includes('alternate')) return 'dot-secret';
+    if (r.includes('ultra') || r.includes('mythic') || r.includes('legendary') || r.includes('majestic') || r.includes('fabled')) return 'dot-ultra';
+    if (r.includes('holo') || r.includes(' ex') || r.includes('ex ') || r.includes(' v') || r.includes('v ')) return 'dot-holo';
+    if (r.includes('rare') || r.includes('super') || r.includes('premium')) return 'dot-rare';
+    return 'dot-common';
+  }
+
+  const GAME_ART   = { mtg: 'art-mtg-blue', pkm: 'art-pkm-fire', ygo: 'art-ygo-dark', fab: 'art-fab-red' };
+  const GAME_SYMBOL = { mtg: '✦', pkm: '⚡', ygo: '★', fab: '⚔' };
+
+  async function loadRecentCards() {
+    try {
+      const res = await fetch('cards.csv');
+      if (!res.ok) return;
+      const text = await res.text();
+      const lines = text.trim().split('\n').filter(l => l.trim());
+      if (lines.length < 2) return;
+
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      const idx = h => headers.indexOf(h);
+
+      const allCards = lines.slice(1).map(line => {
+        const cols = parseCSVLine(line);
+        return {
+          game:   (cols[idx('game')]   || '').trim().toLowerCase(),
+          name:   (cols[idx('name')]   || '').trim(),
+          set:    (cols[idx('set')]    || '').trim(),
+          rarity: (cols[idx('rarity')] || '').trim(),
+          price:  (cols[idx('price')]  || '').trim(),
+          url:    (cols[idx('url')]    || '').trim(),
+        };
+      }).filter(c => c.game && c.name);
+
+      ['mtg', 'pkm', 'ygo', 'fab'].forEach(game => {
+        const grid = document.getElementById('grid-' + game);
+        if (!grid) return;
+        const cards = allCards.filter(c => c.game === game).slice(0, 10);
+        if (cards.length === 0) {
+          grid.innerHTML = '<div class="no-cards">No recent listings</div>';
+          return;
+        }
+        grid.innerHTML = cards.map(card => {
+          const dot = rarityToDot(card.rarity);
+          const art = GAME_ART[game];
+          const sym = GAME_SYMBOL[game];
+          const typeText = [card.rarity, card.set].filter(Boolean).join(' · ');
+          const priceHtml = card.price ? `<div class="card-price">${card.price}</div>` : '';
+          const linkAttrs = card.url ? `href="${card.url}" target="_blank" rel="noopener noreferrer"` : '';
+          return `<a class="card" ${linkAttrs}>
+            <div class="card-dot ${dot}"></div>
+            <div class="card-art">
+              <div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>
+              <div class="card-frame"></div>
+            </div>
+            <div class="card-info">
+              <div class="card-name">${card.name}</div>
+              <div class="card-type">${typeText}</div>
+              ${priceHtml}
+            </div>
+          </a>`;
+        }).join('');
+      });
+    } catch (e) {
+      console.error('Could not load cards.csv:', e);
+    }
+  }
+
+  loadRecentCards();
+
   // Hamburger menu
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const mainNav = document.getElementById('mainNav');
