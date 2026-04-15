@@ -422,6 +422,65 @@
 
     .tcg-cta-btn::after { content: '↗'; font-size: 0.9em; }
 
+    /* ── WHY BUY FROM US ── */
+    .why-buy {
+      padding: 1.75rem;
+      background: var(--surface2);
+      border: 1px solid var(--gold-dark);
+      border-radius: 10px;
+    }
+
+    .why-buy-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      margin-bottom: 1.25rem;
+    }
+
+    .why-buy-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .why-buy-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+
+    .why-buy-icon {
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+      background: rgba(201, 168, 76, 0.1);
+      border: 1px solid var(--gold-dark);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      margin-top: 1px;
+    }
+
+    .why-buy-icon svg { width: 16px; height: 16px; fill: var(--gold); }
+
+    .why-buy-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .why-buy-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
     /* Social stack */
     .social-stack-label {
       font-size: 0.68rem;
@@ -1069,6 +1128,44 @@
 
       <!-- ── LEFT PANEL ── -->
       <aside class="left-panel">
+
+        <!-- Why Buy From Us -->
+        <div class="why-buy">
+          <div class="why-buy-title">Why Buy From Us</div>
+          <div class="why-buy-list">
+
+            <div class="why-buy-item">
+              <div class="why-buy-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L4.09 12.97 11 13l-1 9 8.91-10.97L12 11z"/></svg>
+              </div>
+              <div>
+                <div class="why-buy-label">Fast Shipping</div>
+                <div class="why-buy-desc">Orders dispatched quickly so your cards reach you without delay.</div>
+              </div>
+            </div>
+
+            <div class="why-buy-item">
+              <div class="why-buy-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7z"/></svg>
+              </div>
+              <div>
+                <div class="why-buy-label">Safe Packaging</div>
+                <div class="why-buy-desc">Every card is carefully packed to arrive in exactly the condition you expect.</div>
+              </div>
+            </div>
+
+            <div class="why-buy-item">
+              <div class="why-buy-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              </div>
+              <div>
+                <div class="why-buy-label">Accurate Grading</div>
+                <div class="why-buy-desc">Every card listed exactly as described — no surprises when it arrives.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
 
         <!-- Social label -->
         <div class="social-stack-label">Follow Us</div>
