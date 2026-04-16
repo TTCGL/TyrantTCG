@@ -838,12 +838,31 @@
       color: inherit;
     }
 
+    .card-art-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1px;
+    }
+
     .card-price {
       font-size: 0.6rem;
       font-weight: 700;
       color: var(--gold);
       letter-spacing: 0.05em;
-      margin-top: 1px;
+    }
+
+    .card-qty {
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
     }
 
     .no-cards {
@@ -1646,6 +1665,20 @@
   const GAME_ART   = { mtg: 'art-mtg-blue', pkm: 'art-pkm-fire', ygo: 'art-ygo-dark', fab: 'art-fab-red' };
   const GAME_SYMBOL = { mtg: '✦', pkm: '⚡', ygo: '★', fab: '⚔' };
 
+  async function fetchYGOImages(names) {
+    const map = {};
+    await Promise.all(names.map(async name => {
+      try {
+        const r = await fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?name=' + encodeURIComponent(name));
+        if (r.ok) {
+          const d = await r.json();
+          if (d.data?.[0]?.card_images?.[0]) map[name] = d.data[0].card_images[0].image_url;
+        }
+      } catch {}
+    }));
+    return map;
+  }
+
   async function loadRecentCards() {
     try {
       const res = await fetch('cards.csv');
@@ -1665,9 +1698,13 @@
           set:    (cols[idx('set')]    || '').trim(),
           rarity: (cols[idx('rarity')] || '').trim(),
           price:  (cols[idx('price')]  || '').trim(),
+          qty:    (cols[idx('qty')]    || '').trim(),
           url:    (cols[idx('url')]    || '').trim(),
         };
       }).filter(c => c.game && c.name);
+
+      const ygoNames = [...new Set(allCards.filter(c => c.game === 'ygo').map(c => c.name))];
+      const ygoImages = await fetchYGOImages(ygoNames);
 
       ['mtg', 'pkm', 'ygo', 'fab'].forEach(game => {
         const grid = document.getElementById('grid-' + game);
@@ -1683,17 +1720,19 @@
           const sym = GAME_SYMBOL[game];
           const typeText = [card.rarity, card.set].filter(Boolean).join(' · ');
           const priceHtml = card.price ? `<div class="card-price">${card.price}</div>` : '';
+          const qtyHtml = card.qty ? `<div class="card-qty">Qty: ${card.qty}</div>` : '';
+          const imgUrl = game === 'ygo' ? ygoImages[card.name] : null;
           const linkAttrs = card.url ? `href="${card.url}" target="_blank" rel="noopener noreferrer"` : '';
           return `<a class="card" ${linkAttrs}>
             <div class="card-dot ${dot}"></div>
             <div class="card-art">
-              <div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>
+              ${imgUrl ? `<img class="card-art-img" src="${imgUrl}" alt="${card.name}">` : `<div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>`}
               <div class="card-frame"></div>
             </div>
             <div class="card-info">
               <div class="card-name">${card.name}</div>
               <div class="card-type">${typeText}</div>
-              ${priceHtml}
+              <div class="card-price-row">${priceHtml}${qtyHtml}</div>
             </div>
           </a>`;
         }).join('');
