@@ -1,17 +1,17 @@
-game,name,set,rarity,price,qty,url
-mtg,Example MTG Card,Bloomburrow,Rare,$3.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-mtg,Example MTG Card 2,Duskmourn,Mythic Rare,$12.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-pkm,Example Pokemon Card,Stellar Crown,Holo Rare,$5.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-pkm,Example Pokemon Card 2,Twilight Masquerade,Ultra Rare,$18.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-ygo,Armed Dragon Thunder LV10,Blazing Vortex,Secret Rare,$2.15,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-ygo,Blaze Cannon,Legendary Duelists: Rage of Ra,Ultra Rare,$3.44,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-ygo,Clockwork Night,Battles of Legend: Crystal Revenge,Secret Rare,$2.98,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-ygo,Evil HERO Malicious Bane,Brothers of Legend,Secret Rare,$4.22,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-ygo,Galaxy-Eyes Cipher X Dragon,Ghosts From the Past,Ultra Rare,$4.66,3,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-ygo,Gladiator Beast Domitianus,Chaos Impact,Super Rare,$2.07,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-ygo,Graverobber,Pharaoh's Servant (25th Anniversary Edition),Super Rare,$3.69,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-ygo,Harpie's Feather Duster,Egyptian God Deck: Obelisk the Tormentor,Super Rare,$2.67,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-ygo,Harpie's Pet Dragon - Fearsome Fire Blast,Legendary Duelists: Season 3,Secret Rare,$2.32,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-ygo,Linkross,Eternity Code,Ultra Rare,$2.14,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-fab,Example FAB Card,Rosetta,Majestic,$7.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
-fab,Example FAB Card 2,Part the Mistveil,Legendary,$24.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+status,game,name,set,rarity,price,qty,url
+active,mtg,Example MTG Card,Bloomburrow,Rare,$3.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,mtg,Example MTG Card 2,Duskmourn,Mythic Rare,$12.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,pkm,Example Pokemon Card,Stellar Crown,Holo Rare,$5.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,pkm,Example Pokemon Card 2,Twilight Masquerade,Ultra Rare,$18.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,ygo,Armed Dragon Thunder LV10,Blazing Vortex,Secret Rare,$2.15,1,https://www.tcgplayer.com/product/231314/yugioh-blazing-vortex-yugioh?page=1&Language=English
+active,ygo,Blaze Cannon,Legendary Duelists: Rage of Ra,Ultra Rare,$3.44,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,ygo,Clockwork Night,Battles of Legend: Crystal Revenge,Secret Rare,$2.98,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,ygo,Evil HERO Malicious Bane,Brothers of Legend,Secret Rare,$4.22,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,ygo,Galaxy-Eyes Cipher X Dragon,Ghosts From the Past,Ultra Rare,$4.66,3,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,ygo,Gladiator Beast Domitianus,Chaos Impact,Super Rare,$2.07,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,ygo,Graverobber,Pharaoh's Servant (25th Anniversary Edition),Super Rare,$3.69,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,ygo,Harpie's Feather Duster,Egyptian God Deck: Obelisk the Tormentor,Super Rare,$2.67,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,ygo,Harpie's Pet Dragon - Fearsome Fire Blast,Legendary Duelists: Season 3,Secret Rare,$2.32,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,ygo,Linkross,Eternity Code,Ultra Rare,$2.14,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,fab,Example FAB Card,Rosetta,Majestic,$7.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback
+active,fab,Example FAB Card 2,Part the Mistveil,Legendary,$24.99,1,https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback

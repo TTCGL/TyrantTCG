@@ -1704,6 +1704,7 @@
       const allCards = lines.slice(1).map(line => {
         const cols = parseCSVLine(line);
         return {
+          status: (cols[idx('status')] || 'active').trim().toLowerCase(),
           game:   (cols[idx('game')]   || '').trim().toLowerCase(),
           name:   (cols[idx('name')]   || '').trim(),
           set:    (cols[idx('set')]    || '').trim(),
@@ -1712,7 +1713,7 @@
           qty:    (cols[idx('qty')]    || '').trim(),
           url:    (cols[idx('url')]    || '').trim(),
         };
-      }).filter(c => c.game && c.name);
+      }).filter(c => c.game && c.name && c.status === 'active');
 
       const ygoNames = [...new Set(allCards.filter(c => c.game === 'ygo').map(c => c.name))];
       const ygoImages = await fetchYGOImages(ygoNames);
