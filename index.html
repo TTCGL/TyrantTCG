@@ -1315,12 +1315,18 @@
       .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 0.75rem; }
       .left-panel { flex-direction: column; }
       .social-stack { flex-direction: column; }
+      .game-header { padding: 0.75rem 1rem; gap: 0.6rem; }
+      .game-header > .game-tag:last-child { display: none; }
+      .game-title { font-size: 0.85rem; }
     }
 
     @media (max-width: 480px) {
       section { padding: 60px 1.25rem; }
       .main-section { padding: 60px 1.25rem; }
-      .cards-grid { grid-template-columns: repeat(1, 1fr); }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; padding: 0.6rem; }
+      .card-info { padding: 6px 8px 8px; }
+      .card-name { font-size: 0.72rem; }
+      .card-type { font-size: 0.6rem; }
     }
   </style>
 </head>
@@ -1617,6 +1623,49 @@
 
 
 <script>
+  // ── HATE SPEECH FILTER ──
+  // Targeted blocklist: racial slurs, racist references, calls to violence.
+  // General profanity is intentionally not included.
+  function normalizeForFilter(str) {
+    return str
+      .toLowerCase()
+      .replace(/@/g, 'a').replace(/4/g, 'a')
+      .replace(/3/g, 'e')
+      .replace(/1/g, 'i').replace(/!/g, 'i')
+      .replace(/0/g, 'o')
+      .replace(/5/g, 's').replace(/\$/g, 's');
+  }
+
+  const HATE_PATTERNS = [
+    // Anti-Black slurs
+    /\bnigger/i, /\bnigga\b/i, /\bcoon\b/i, /\bjigaboo\b/i,
+    /\bporch\s*monkey\b/i, /\bjungle\s*bunny\b/i, /\bcotton\s*picker\b/i,
+    /\buncle\s*tom\b/i, /\bhouse\s*nigger\b/i,
+    // Anti-Asian slurs
+    /\bchink\b/i, /\bgook\b/i, /\bzipperhead\b/i, /\bjap\b/i, /\bchinky\b/i,
+    // Anti-Latino slurs
+    /\bspic\b/i, /\bbeaner\b/i, /\bwetback\b/i,
+    // Anti-Arab / anti-Muslim slurs
+    /\btowelhead\b/i, /\braghead\b/i, /\bsand\s*nigger\b/i,
+    // Anti-Jewish slurs
+    /\bkike\b/i, /\bhymie\b/i, /\bheeb\b/i, /\byid\b/i,
+    // Anti-Native American slurs
+    /\bredskin\b/i, /\binjun\b/i, /\bsquaw\b/i,
+    // White supremacist references
+    /\bheil\s*hitler\b/i, /\bwhite\s*power\b/i, /\bwhite\s*supremac/i,
+    /\bku\s*klux\b/i, /\brahowa\b/i, /\b1488\b/,
+    // Explicit calls to violence against ethnic/religious groups
+    /\bgas\s*(all\s+)?(the\s+)?(jews|blacks|muslims|immigrants)\b/i,
+    /\b(kill|exterminate)\s*(all\s+)?(the\s+)?(jews|blacks|whites|muslims|latinos|asians|immigrants)\b/i,
+  ];
+
+  function containsHateSpeech(text) {
+    if (!text) return false;
+    const raw = String(text).toLowerCase();
+    const normalized = normalizeForFilter(raw);
+    return HATE_PATTERNS.some(p => p.test(raw) || p.test(normalized));
+  }
+
   // ── CUSTOMER FEEDBACK (loaded from feedback.csv) ──
   async function loadFeedback() {
     try {
@@ -1802,6 +1851,12 @@
   feedbackForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     const data = new FormData(feedbackForm);
+    const fbName = (data.get('name') || '').trim();
+    const fbMsg  = (data.get('message') || '').trim();
+    if (containsHateSpeech(fbName) || containsHateSpeech(fbMsg)) {
+      alert('Your message contains content that isn\'t allowed. Please revise and try again.');
+      return;
+    }
     try {
       const res = await fetch('https://formspree.io/f/xojyjznl', {
         method: 'POST',
@@ -1831,6 +1886,11 @@
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
       const data = new FormData(form);
+      const signupEmail = (data.get('email') || '').trim();
+      if (containsHateSpeech(signupEmail)) {
+        alert('Your submission contains content that isn\'t allowed. Please revise and try again.');
+        return;
+      }
       try {
         const res = await fetch(form.action, {
           method: 'POST',
