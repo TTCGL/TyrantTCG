@@ -880,8 +880,8 @@
     }
 
     .card-art {
-      flex: 1;
-      position: relative;
+      position: absolute;
+      inset: 0;
       overflow: hidden;
     }
 
@@ -935,9 +935,12 @@
     }
 
     .card-info {
-      background: linear-gradient(to top, #0a0a0a, #161616);
-      padding: 8px 10px;
-      border-top: 1px solid var(--border);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.75) 60%, transparent 100%);
+      padding: 22px 10px 8px;
     }
 
     .card-name {
