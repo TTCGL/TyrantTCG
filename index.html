@@ -1339,7 +1339,7 @@
       <button class="construction-mobile-btn" id="constructionBtn" aria-label="Site notice">⚠</button>
       <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">&#9776;</button>
       <nav id="mainNav">
-        <a href="#main">Recently Listed</a>
+        <a href="#main">Store Showcase</a>
         <a href="#contact">About &amp; Contact</a>
         <form class="nav-signup" id="navSignupForm" action="https://formspree.io/f/mojyqzpg" method="POST">
           <input type="email" name="email" placeholder="Your email..." required />
@@ -1428,7 +1428,7 @@
           <div class="game-header">
             <div class="game-icon">✦</div>
             <div class="game-title">Magic: The Gathering</div>
-            <div class="game-tag">Recently Listed</div>
+            <div class="game-tag">Store Showcase</div>
           </div>
           <div class="cards-grid" id="grid-mtg"></div>
         </div>
@@ -1438,7 +1438,7 @@
           <div class="game-header">
             <div class="game-icon">⚡</div>
             <div class="game-title">Pokémon</div>
-            <div class="game-tag">Recently Listed</div>
+            <div class="game-tag">Store Showcase</div>
           </div>
           <div class="cards-grid" id="grid-pkm"></div>
         </div>
@@ -1448,7 +1448,7 @@
           <div class="game-header">
             <div class="game-icon">★</div>
             <div class="game-title">Yu-Gi-Oh!</div>
-            <div class="game-tag">Recently Listed</div>
+            <div class="game-tag">Store Showcase</div>
           </div>
           <div class="cards-grid" id="grid-ygo"></div>
         </div>
@@ -1458,7 +1458,7 @@
           <div class="game-header">
             <div class="game-icon">⚔</div>
             <div class="game-title">Flesh &amp; Blood</div>
-            <div class="game-tag">Recently Listed</div>
+            <div class="game-tag">Store Showcase</div>
           </div>
           <div class="cards-grid" id="grid-fab"></div>
         </div>
@@ -1721,7 +1721,7 @@
       ['mtg', 'pkm', 'ygo', 'fab'].forEach(game => {
         const grid = document.getElementById('grid-' + game);
         if (!grid) return;
-        const cards = allCards.filter(c => c.game === game).slice(0, 10);
+        const cards = allCards.filter(c => c.game === game);
         if (cards.length === 0) {
           grid.innerHTML = '<div class="no-cards">No recent listings</div>';
           return;
