@@ -818,24 +818,34 @@
     /* ── CARDS GRID ── */
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0.75rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
       padding: 1.25rem;
+    }
+
+    .card-wrapper {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border-radius: 8px;
+    }
+
+    .card-wrapper:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
     }
 
     .card {
       aspect-ratio: 2.5 / 3.5;
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
       overflow: hidden;
       position: relative;
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      color: inherit;
     }
 
     .card-art-img {
@@ -853,14 +863,14 @@
     }
 
     .card-price {
-      font-size: 0.6rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: var(--gold);
       letter-spacing: 0.05em;
     }
 
     .card-qty {
-      font-size: 0.55rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       letter-spacing: 0.05em;
     }
@@ -874,9 +884,8 @@
       letter-spacing: 0.1em;
     }
 
-    .card:hover {
-      transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+    .card-wrapper:hover .card {
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
     }
 
     .card-art {
@@ -935,31 +944,30 @@
     }
 
     .card-info {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.75) 60%, transparent 100%);
-      padding: 22px 10px 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      padding: 10px 12px 12px;
     }
 
     .card-name {
       font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: var(--gold);
       letter-spacing: 0.03em;
-      margin-bottom: 1px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin-bottom: 4px;
+      line-height: 1.3;
     }
 
     .card-type {
-      font-size: 0.58rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
+      margin-bottom: 6px;
+      line-height: 1.4;
     }
 
     .card-dot {
@@ -1304,7 +1312,7 @@
       .nav-signup { margin-left: 0; width: 100%; }
       .nav-signup input[type="email"] { flex: 1; width: auto; }
       .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; padding: 0.75rem; }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 0.75rem; }
       .left-panel { flex-direction: column; }
       .social-stack { flex-direction: column; }
     }
@@ -1312,7 +1320,7 @@
     @media (max-width: 480px) {
       section { padding: 60px 1.25rem; }
       .main-section { padding: 60px 1.25rem; }
-      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .cards-grid { grid-template-columns: repeat(1, 1fr); }
     }
   </style>
 </head>
@@ -1726,11 +1734,13 @@
           const qtyHtml = card.qty ? `<div class="card-qty">Qty: ${card.qty}</div>` : '';
           const imgUrl = game === 'ygo' ? ygoImages[card.name] : null;
           const linkAttrs = card.url ? `href="${card.url}" target="_blank" rel="noopener noreferrer"` : '';
-          return `<a class="card" ${linkAttrs}>
-            <div class="card-dot ${dot}"></div>
-            <div class="card-art">
-              ${imgUrl ? `<img class="card-art-img" src="${imgUrl}" alt="${card.name}">` : `<div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>`}
-              <div class="card-frame"></div>
+          return `<a class="card-wrapper" ${linkAttrs}>
+            <div class="card">
+              <div class="card-dot ${dot}"></div>
+              <div class="card-art">
+                ${imgUrl ? `<img class="card-art-img" src="${imgUrl}" alt="${card.name}">` : `<div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>`}
+                <div class="card-frame"></div>
+              </div>
             </div>
             <div class="card-info">
               <div class="card-name">${card.name}</div>
