@@ -1579,7 +1579,7 @@
       <button class="feedback-modal-close" id="feedbackClose">&times;</button>
       <h3>Leave Feedback</h3>
       <p>I'd love to hear your thoughts — good or bad!</p>
-      <form id="feedbackForm" action="https://formspree.io/f/mojyqzpg" method="POST">
+      <form id="feedbackForm" action="https://formspree.io/f/xojyjznl" method="POST">
         <div class="feedback-field">
           <label for="fb-name">Your Name</label>
           <input type="text" id="fb-name" name="name" placeholder="Optional" />
@@ -1797,7 +1797,7 @@
     e.preventDefault();
     const data = new FormData(feedbackForm);
     try {
-      const res = await fetch('https://formspree.io/f/mojyqzpg', {
+      const res = await fetch('https://formspree.io/f/xojyjznl', {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
         body: data
