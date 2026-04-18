@@ -1745,14 +1745,25 @@
     return map;
   }
 
-  async function fetchPKMImages(names) {
+  const PKM_SET_IDS = {
+    'Brilliant Stars':                  'swsh9',
+    'Brilliant Stars Trainer Gallery':  'swsh9tg',
+    'Astral Radiance':                  'swsh10',
+    'Astral Radiance Trainer Gallery':  'swsh10tg',
+  };
+
+  async function fetchPKMImages(cards) {
     const map = {};
-    await Promise.all(names.map(async name => {
+    await Promise.all(cards.map(async card => {
       try {
-        const r = await fetch('https://api.pokemontcg.io/v2/cards?q=name:"' + encodeURIComponent(name) + '"&pageSize=1');
+        const setId = PKM_SET_IDS[card.set];
+        const query = setId
+          ? `name:"${card.name}" set.id:${setId}`
+          : `name:"${card.name}"`;
+        const r = await fetch('https://api.pokemontcg.io/v2/cards?q=' + encodeURIComponent(query) + '&pageSize=1');
         if (r.ok) {
           const d = await r.json();
-          if (d.data?.[0]?.images?.large) map[name] = d.data[0].images.large;
+          if (d.data?.[0]?.images?.large) map[card.name] = d.data[0].images.large;
         }
       } catch {}
     }));
@@ -1785,8 +1796,8 @@
       }).filter(c => c.game && c.name && c.status === 'active');
 
       const ygoNames = [...new Set(allCards.filter(c => c.game === 'ygo').map(c => c.name))];
-      const pkmNames = [...new Set(allCards.filter(c => c.game === 'pkm').map(c => c.name))];
-      const [ygoImages, pkmImages] = await Promise.all([fetchYGOImages(ygoNames), fetchPKMImages(pkmNames)]);
+      const pkmCards = [...new Map(allCards.filter(c => c.game === 'pkm').map(c => [c.name, c])).values()];
+      const [ygoImages, pkmImages] = await Promise.all([fetchYGOImages(ygoNames), fetchPKMImages(pkmCards)]);
 
       ['mtg', 'pkm', 'ygo', 'fab'].forEach(game => {
         const grid = document.getElementById('grid-' + game);
