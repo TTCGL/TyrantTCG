@@ -1745,6 +1745,20 @@
     return map;
   }
 
+  async function fetchPKMImages(names) {
+    const map = {};
+    await Promise.all(names.map(async name => {
+      try {
+        const r = await fetch('https://api.pokemontcg.io/v2/cards?q=name:"' + encodeURIComponent(name) + '"&pageSize=1');
+        if (r.ok) {
+          const d = await r.json();
+          if (d.data?.[0]?.images?.large) map[name] = d.data[0].images.large;
+        }
+      } catch {}
+    }));
+    return map;
+  }
+
   async function loadRecentCards() {
     try {
       const res = await fetch('cards.csv');
@@ -1771,7 +1785,8 @@
       }).filter(c => c.game && c.name && c.status === 'active');
 
       const ygoNames = [...new Set(allCards.filter(c => c.game === 'ygo').map(c => c.name))];
-      const ygoImages = await fetchYGOImages(ygoNames);
+      const pkmNames = [...new Set(allCards.filter(c => c.game === 'pkm').map(c => c.name))];
+      const [ygoImages, pkmImages] = await Promise.all([fetchYGOImages(ygoNames), fetchPKMImages(pkmNames)]);
 
       ['mtg', 'pkm', 'ygo', 'fab'].forEach(game => {
         const grid = document.getElementById('grid-' + game);
@@ -1788,7 +1803,7 @@
           const typeText = [card.rarity, card.set].filter(Boolean).join(' · ');
           const priceHtml = card.price ? `<div class="card-price">${card.price}</div>` : '';
           const qtyHtml = card.qty ? `<div class="card-qty">Qty: ${card.qty}</div>` : '';
-          const imgUrl = game === 'ygo' ? ygoImages[card.name] : null;
+          const imgUrl = game === 'ygo' ? ygoImages[card.name] : game === 'pkm' ? pkmImages[card.name] : null;
           const linkAttrs = card.url ? `href="${card.url}" target="_blank" rel="noopener noreferrer"` : '';
           return `<a class="card-wrapper" ${linkAttrs}>
             <div class="card">
