@@ -1758,7 +1758,7 @@
       try {
         const setId = PKM_SET_IDS[card.set];
         const query = setId
-          ? `name:"${card.name}" set.id:${setId}`
+          ? `name:"${card.name}" set.id:${setId}${card.number ? ` number:${card.number}` : ''}`
           : `name:"${card.name}"`;
         const r = await fetch('https://api.pokemontcg.io/v2/cards?q=' + encodeURIComponent(query) + '&pageSize=1');
         if (r.ok) {
@@ -1792,6 +1792,7 @@
           price:  (cols[idx('price')]  || '').trim(),
           qty:    (cols[idx('qty')]    || '').trim(),
           url:    (cols[idx('url')]    || '').trim(),
+          number: (cols[idx('number')] || '').trim(),
         };
       }).filter(c => c.game && c.name && c.status === 'active');
 
