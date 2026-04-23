@@ -1850,13 +1850,12 @@
           const priceHtml = card.price ? `<div class="card-price">${card.price}</div>` : '';
           const qtyHtml = card.qty ? `<div class="card-qty">Qty: ${card.qty}</div>` : '';
           const imgUrl = game === 'ygo' ? ygoImages[card.name] : game === 'pkm' ? pkmImages[card.name] : null;
-          const imgStyle = game === 'ygo' ? ' style="object-fit:contain"' : '';
           const linkAttrs = card.url ? `href="${card.url}" target="_blank" rel="noopener noreferrer"` : '';
           return `<a class="card-wrapper" ${linkAttrs}>
             <div class="card">
               <div class="card-dot ${dot}"></div>
               <div class="card-art">
-                ${imgUrl ? `<img class="card-art-img" src="${imgUrl}" alt="${card.name}"${imgStyle}>` : `<div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>`}
+                ${imgUrl ? `<img class="card-art-img" src="${imgUrl}" alt="${card.name}">` : `<div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>`}
                 <div class="card-frame"></div>
               </div>
             </div>
