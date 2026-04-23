@@ -1764,13 +1764,18 @@
     await Promise.all(cards.map(async card => {
       try {
         const setId = PKM_SET_IDS[card.set];
-        const query = setId
-          ? `name:"${card.name}" set.id:${setId}${card.number ? ` number:${card.number}` : ''}`
-          : `name:"${card.name}"`;
-        const r = await fetchWithTimeout('https://api.pokemontcg.io/v2/cards?q=' + encodeURIComponent(query) + '&pageSize=1');
-        if (r.ok) {
-          const d = await r.json();
-          if (d.data?.[0]?.images?.large) map[card.name] = d.data[0].images.large;
+        const queries = setId
+          ? [
+              `name:"${card.name}" set.id:${setId}${card.number ? ` number:${card.number}` : ''}`,
+              `name:"${card.name}"`,
+            ]
+          : [`name:"${card.name}"`];
+        for (const query of queries) {
+          const r = await fetchWithTimeout('https://api.pokemontcg.io/v2/cards?q=' + encodeURIComponent(query) + '&pageSize=1');
+          if (r.ok) {
+            const d = await r.json();
+            if (d.data?.[0]?.images?.large) { map[card.name] = d.data[0].images.large; break; }
+          }
         }
       } catch {}
     }));
@@ -1803,9 +1808,29 @@
         };
       }).filter(c => c.game && c.name && c.status === 'active');
 
+      const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
+      function loadCache(key) {
+        try {
+          const raw = localStorage.getItem(key);
+          if (!raw) return null;
+          const { ts, data } = JSON.parse(raw);
+          if (Date.now() - ts < CACHE_TTL) return data;
+        } catch {}
+        return null;
+      }
+      function saveCache(key, data) {
+        try { localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch {}
+      }
+
       const ygoNames = [...new Set(allCards.filter(c => c.game === 'ygo').map(c => c.name))];
       const pkmCards = [...new Map(allCards.filter(c => c.game === 'pkm').map(c => [c.name, c])).values()];
-      const [ygoResult, pkmResult] = await Promise.allSettled([fetchYGOImages(ygoNames), fetchPKMImages(pkmCards)]);
+
+      const cachedYGO = loadCache('img_ygo');
+      const cachedPKM = loadCache('img_pkm');
+      const [ygoResult, pkmResult] = await Promise.allSettled([
+        cachedYGO ? Promise.resolve(cachedYGO) : fetchYGOImages(ygoNames).then(r => { saveCache('img_ygo', r); return r; }),
+        cachedPKM ? Promise.resolve(cachedPKM) : fetchPKMImages(pkmCards).then(r => { saveCache('img_pkm', r); return r; }),
+      ]);
       const ygoImages = ygoResult.status === 'fulfilled' ? ygoResult.value : {};
       const pkmImages = pkmResult.status === 'fulfilled' ? pkmResult.value : {};
 
