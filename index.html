@@ -1738,7 +1738,7 @@
         const r = await fetchWithTimeout('https://db.ygoprodeck.com/api/v7/cardinfo.php?name=' + encodeURIComponent(name));
         if (r.ok) {
           const d = await r.json();
-          if (d.data?.[0]?.card_images?.[0]) map[name] = d.data[0].card_images[0].image_url;
+          if (d.data?.[0]?.card_images?.[0]) map[name] = d.data[0].card_images[0].image_url_cropped;
         }
       } catch {}
     }));
@@ -1825,11 +1825,11 @@
       const ygoNames = [...new Set(allCards.filter(c => c.game === 'ygo').map(c => c.name))];
       const pkmCards = [...new Map(allCards.filter(c => c.game === 'pkm').map(c => [c.name, c])).values()];
 
-      const cachedYGO = loadCache('img_ygo');
-      const cachedPKM = loadCache('img_pkm');
+      const cachedYGO = loadCache('img_ygo_v2');
+      const cachedPKM = loadCache('img_pkm_v2');
       const [ygoResult, pkmResult] = await Promise.allSettled([
-        cachedYGO ? Promise.resolve(cachedYGO) : fetchYGOImages(ygoNames).then(r => { saveCache('img_ygo', r); return r; }),
-        cachedPKM ? Promise.resolve(cachedPKM) : fetchPKMImages(pkmCards).then(r => { saveCache('img_pkm', r); return r; }),
+        cachedYGO ? Promise.resolve(cachedYGO) : fetchYGOImages(ygoNames).then(r => { saveCache('img_ygo_v2', r); return r; }),
+        cachedPKM ? Promise.resolve(cachedPKM) : fetchPKMImages(pkmCards).then(r => { saveCache('img_pkm_v2', r); return r; }),
       ]);
       const ygoImages = ygoResult.status === 'fulfilled' ? ygoResult.value : {};
       const pkmImages = pkmResult.status === 'fulfilled' ? pkmResult.value : {};
