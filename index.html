@@ -1831,14 +1831,17 @@
       const ygoNames = [...new Set(allCards.filter(c => c.game === 'ygo').map(c => c.name))];
       const pkmCards = [...new Map(allCards.filter(c => c.game === 'pkm').map(c => [c.name, c])).values()];
 
-      const cachedYGO = loadCache('img_ygo_v3');
-      const cachedPKM = loadCache('img_pkm_v3');
+      let ygoImages = loadCache('img_ygo_v3') || {};
+      let pkmImages = loadCache('img_pkm_v3') || {};
+
+      const missingYgo = ygoNames.filter(n => !ygoImages[n]);
+      const missingPkm = pkmCards.filter(c => !pkmImages[c.name]);
       const [ygoResult, pkmResult] = await Promise.allSettled([
-        cachedYGO ? Promise.resolve(cachedYGO) : fetchYGOImages(ygoNames).then(r => { saveCache('img_ygo_v3', r); return r; }),
-        cachedPKM ? Promise.resolve(cachedPKM) : fetchPKMImages(pkmCards).then(r => { saveCache('img_pkm_v3', r); return r; }),
+        missingYgo.length ? fetchYGOImages(missingYgo).then(r => { ygoImages = { ...ygoImages, ...r }; saveCache('img_ygo_v3', ygoImages); return ygoImages; }) : Promise.resolve(ygoImages),
+        missingPkm.length ? fetchPKMImages(missingPkm).then(r => { pkmImages = { ...pkmImages, ...r }; saveCache('img_pkm_v3', pkmImages); return pkmImages; }) : Promise.resolve(pkmImages),
       ]);
-      const ygoImages = ygoResult.status === 'fulfilled' ? ygoResult.value : {};
-      const pkmImages = pkmResult.status === 'fulfilled' ? pkmResult.value : {};
+      if (ygoResult.status === 'fulfilled') ygoImages = ygoResult.value;
+      if (pkmResult.status === 'fulfilled') pkmImages = pkmResult.value;
 
       ['mtg', 'pkm', 'ygo', 'fab'].forEach(game => {
         const grid = document.getElementById('grid-' + game);
