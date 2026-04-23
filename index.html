@@ -1735,7 +1735,7 @@
     const map = {};
     await Promise.all(names.map(async name => {
       try {
-        const r = await fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?name=' + encodeURIComponent(name));
+        const r = await fetchWithTimeout('https://db.ygoprodeck.com/api/v7/cardinfo.php?name=' + encodeURIComponent(name));
         if (r.ok) {
           const d = await r.json();
           if (d.data?.[0]?.card_images?.[0]) map[name] = d.data[0].card_images[0].image_url;
@@ -1752,6 +1752,13 @@
     'Astral Radiance Trainer Gallery':  'swsh10tg',
   };
 
+  async function fetchWithTimeout(url, ms = 5000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), ms);
+    try { return await fetch(url, { signal: controller.signal }); }
+    finally { clearTimeout(id); }
+  }
+
   async function fetchPKMImages(cards) {
     const map = {};
     await Promise.all(cards.map(async card => {
@@ -1760,7 +1767,7 @@
         const query = setId
           ? `name:"${card.name}" set.id:${setId}${card.number ? ` number:${card.number}` : ''}`
           : `name:"${card.name}"`;
-        const r = await fetch('https://api.pokemontcg.io/v2/cards?q=' + encodeURIComponent(query) + '&pageSize=1');
+        const r = await fetchWithTimeout('https://api.pokemontcg.io/v2/cards?q=' + encodeURIComponent(query) + '&pageSize=1');
         if (r.ok) {
           const d = await r.json();
           if (d.data?.[0]?.images?.large) map[card.name] = d.data[0].images.large;
@@ -1798,7 +1805,9 @@
 
       const ygoNames = [...new Set(allCards.filter(c => c.game === 'ygo').map(c => c.name))];
       const pkmCards = [...new Map(allCards.filter(c => c.game === 'pkm').map(c => [c.name, c])).values()];
-      const [ygoImages, pkmImages] = await Promise.all([fetchYGOImages(ygoNames), fetchPKMImages(pkmCards)]);
+      const [ygoResult, pkmResult] = await Promise.allSettled([fetchYGOImages(ygoNames), fetchPKMImages(pkmCards)]);
+      const ygoImages = ygoResult.status === 'fulfilled' ? ygoResult.value : {};
+      const pkmImages = pkmResult.status === 'fulfilled' ? pkmResult.value : {};
 
       ['mtg', 'pkm', 'ygo', 'fab'].forEach(game => {
         const grid = document.getElementById('grid-' + game);
