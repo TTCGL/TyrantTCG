@@ -1360,7 +1360,7 @@
     <div class="hero-badge">&#9670; Est. 2024 &#9670;</div>
     <img src="tyrant-tcg-logo-cards.png" alt="Tyrant TCG Limited" class="hero-logo" />
     <p>
-      Colorado-based TCGplayer seller specializing in Magic: The Gathering, Pokémon, Yu-Gi-Oh!, and Flesh &amp; Blood singles. Every order ships fast, arrives safely packed, and is graded exactly as listed — whether you're building a competitive deck or in search of a collection piece, Tyrant TCG Limited is the place to make sure YOU rule YOUR game!
+      Western Slope of Colorado TCGplayer seller specializing in Flesh &amp; Blood, Pokémon, Yu-Gi-Oh!, and Magic: The Gathering singles. Every order ships fast, arrives safely packed, and is graded exactly as listed — whether you're building a competitive deck or in search of a collection piece, Tyrant TCG Limited is the place to make sure YOU rule YOUR game!
     </p>
     <div class="hero-cta">
       <a href="https://www.tcgplayer.com/sellers/Tyrant-TCG-Limited/edf83467/feedback" target="_blank" rel="noopener noreferrer" class="btn-primary">Shop on TCGplayer</a>
@@ -1731,44 +1731,12 @@
   const GAME_ART   = { mtg: 'art-mtg-blue', pkm: 'art-pkm-fire', ygo: 'art-ygo-dark', fab: 'art-fab-red' };
   const GAME_SYMBOL = { mtg: '✦', pkm: '⚡', ygo: '★', fab: '⚔' };
 
-  async function fetchYGOImages(names) {
-    const map = {};
-    await Promise.all(names.map(async name => {
-      try {
-        const r = await fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?name=' + encodeURIComponent(name));
-        if (r.ok) {
-          const d = await r.json();
-          if (d.data?.[0]?.card_images?.[0]) map[name] = d.data[0].card_images[0].image_url;
-        }
-      } catch {}
-    }));
-    return map;
-  }
-
   const PKM_SET_IDS = {
     'Brilliant Stars':                  'swsh9',
     'Brilliant Stars Trainer Gallery':  'swsh9tg',
     'Astral Radiance':                  'swsh10',
     'Astral Radiance Trainer Gallery':  'swsh10tg',
   };
-
-  async function fetchPKMImages(cards) {
-    const map = {};
-    await Promise.all(cards.map(async card => {
-      try {
-        const setId = PKM_SET_IDS[card.set];
-        const query = setId
-          ? `name:"${card.name}" set.id:${setId}${card.number ? ` number:${card.number}` : ''}`
-          : `name:"${card.name}"`;
-        const r = await fetch('https://api.pokemontcg.io/v2/cards?q=' + encodeURIComponent(query) + '&pageSize=1');
-        if (r.ok) {
-          const d = await r.json();
-          if (d.data?.[0]?.images?.large) map[card.name] = d.data[0].images.large;
-        }
-      } catch {}
-    }));
-    return map;
-  }
 
   async function loadRecentCards() {
     try {
@@ -1796,10 +1764,7 @@
         };
       }).filter(c => c.game && c.name && c.status === 'active');
 
-      const ygoNames = [...new Set(allCards.filter(c => c.game === 'ygo').map(c => c.name))];
-      const pkmCards = [...new Map(allCards.filter(c => c.game === 'pkm').map(c => [c.name, c])).values()];
-      const [ygoImages, pkmImages] = await Promise.all([fetchYGOImages(ygoNames), fetchPKMImages(pkmCards)]);
-
+      // Render all cards immediately with placeholder art — images load on scroll
       ['mtg', 'pkm', 'ygo', 'fab'].forEach(game => {
         const grid = document.getElementById('grid-' + game);
         if (!grid) return;
@@ -1815,13 +1780,15 @@
           const typeText = [card.rarity, card.set].filter(Boolean).join(' · ');
           const priceHtml = card.price ? `<div class="card-price">${card.price}</div>` : '';
           const qtyHtml = card.qty ? `<div class="card-qty">Qty: ${card.qty}</div>` : '';
-          const imgUrl = game === 'ygo' ? ygoImages[card.name] : game === 'pkm' ? pkmImages[card.name] : null;
           const linkAttrs = card.url ? `href="${card.url}" target="_blank" rel="noopener noreferrer"` : '';
+          const lazyAttrs = (game === 'ygo' || game === 'pkm')
+            ? ` data-lazy-game="${game}" data-lazy-name="${card.name.replace(/"/g, '&quot;')}" data-lazy-set="${card.set.replace(/"/g, '&quot;')}" data-lazy-number="${card.number}"`
+            : '';
           return `<a class="card-wrapper" ${linkAttrs}>
-            <div class="card">
+            <div class="card"${lazyAttrs}>
               <div class="card-dot ${dot}"></div>
               <div class="card-art">
-                ${imgUrl ? `<img class="card-art-img" src="${imgUrl}" alt="${card.name}">` : `<div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>`}
+                <div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>
                 <div class="card-frame"></div>
               </div>
             </div>
@@ -1833,6 +1800,50 @@
           </a>`;
         }).join('');
       });
+
+      // Lazy-load images: fetch only when a card scrolls near the viewport
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const card = entry.target;
+          observer.unobserve(card);
+          const game   = card.dataset.lazyGame;
+          const name   = card.dataset.lazyName;
+          const set    = card.dataset.lazySet;
+          const number = card.dataset.lazyNumber;
+          const artDiv = card.querySelector('.card-art');
+
+          function applyImage(imgUrl) {
+            if (!imgUrl || !artDiv) return;
+            const bg = artDiv.querySelector('.card-art-bg');
+            if (!bg) return;
+            const img = document.createElement('img');
+            img.className = 'card-art-img';
+            img.src = imgUrl;
+            img.alt = name;
+            bg.replaceWith(img);
+          }
+
+          if (game === 'ygo') {
+            fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?name=' + encodeURIComponent(name))
+              .then(r => r.ok ? r.json() : null)
+              .then(d => applyImage(d?.data?.[0]?.card_images?.[0]?.image_url))
+              .catch(() => {});
+          } else if (game === 'pkm') {
+            const setId = PKM_SET_IDS[set];
+            const query = setId
+              ? `name:"${name}" set.id:${setId}${number ? ` number:${number}` : ''}`
+              : `name:"${name}"`;
+            fetch('https://api.pokemontcg.io/v2/cards?q=' + encodeURIComponent(query) + '&pageSize=1')
+              .then(r => r.ok ? r.json() : null)
+              .then(d => applyImage(d?.data?.[0]?.images?.large))
+              .catch(() => {});
+          }
+        });
+      }, { rootMargin: '200px' });
+
+      document.querySelectorAll('.card[data-lazy-game]').forEach(card => observer.observe(card));
+
     } catch (e) {
       console.error('Could not load cards.csv:', e);
     }
