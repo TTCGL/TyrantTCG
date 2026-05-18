@@ -1334,6 +1334,214 @@
       .card-name { font-size: 0.72rem; }
       .card-type { font-size: 0.6rem; }
     }
+
+    /* ── RECENTLY ADDED HEADER ── */
+    .recently-added-header {
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .recently-added-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+    }
+
+    .recently-added-note {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* ── GAME BADGES (unified grid) ── */
+    .card-game-badge {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 3px;
+      z-index: 1;
+    }
+
+    .badge-mtg { background: rgba(29,126,216,0.25); color: #60aaee; border: 1px solid rgba(29,126,216,0.4); }
+    .badge-pkm { background: rgba(227,53,13,0.25);  color: #f06040; border: 1px solid rgba(227,53,13,0.4); }
+    .badge-ygo { background: rgba(124,58,237,0.25); color: #a070ee; border: 1px solid rgba(124,58,237,0.4); }
+    .badge-fab { background: rgba(185,28,28,0.25);  color: #dd5050; border: 1px solid rgba(185,28,28,0.4); }
+
+    /* ── PRIVATE SALE SECTION ── */
+    .private-section {
+      background: var(--black);
+      position: relative;
+      padding: 80px 2rem;
+    }
+
+    .private-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+    }
+
+    .private-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .private-label::before, .private-label::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 40px;
+      background: var(--gold);
+    }
+
+    .private-desc {
+      color: #888;
+      font-size: 0.95rem;
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .private-desc strong { color: var(--text); }
+
+    .private-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 860px;
+    }
+
+    .private-item {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--gold-dark);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .private-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 0% 50%, rgba(201,168,76,0.06), transparent 70%);
+      pointer-events: none;
+    }
+
+    .private-item:hover {
+      border-color: var(--gold);
+      box-shadow: 0 8px 32px rgba(201,168,76,0.12);
+    }
+
+    .private-item-badge {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      align-self: flex-start;
+      margin-top: 2px;
+    }
+
+    .private-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .private-item-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 3px;
+    }
+
+    .private-item-details {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+    }
+
+    .private-item-notes {
+      font-size: 0.78rem;
+      color: #666;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .private-item-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .private-item-price {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .private-item-inquire {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      color: var(--black);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: filter 0.2s;
+      white-space: nowrap;
+    }
+
+    .private-item-inquire:hover { filter: brightness(1.15); }
+
+    .private-empty {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      padding: 2rem 0;
+    }
+
+    @media (max-width: 600px) {
+      .private-item { flex-wrap: wrap; }
+      .private-item-right { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; }
+    }
   </style>
 </head>
 <body>
@@ -1351,7 +1559,8 @@
       <button class="construction-mobile-btn" id="constructionBtn" aria-label="Site notice">⚠</button>
       <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">&#9776;</button>
       <nav id="mainNav">
-        <a href="#main">Store Showcase</a>
+        <a href="#main">Recently Added</a>
+        <a href="#private-sale">Private Sale</a>
         <a href="#contact">About &amp; Contact</a>
         <form class="nav-signup" id="navSignupForm" action="https://formspree.io/f/mojyqzpg" method="POST">
           <input type="email" name="email" placeholder="Your email..." required />
@@ -1432,53 +1641,25 @@
 
       </aside>
 
-      <!-- ── RIGHT PANEL — 4 GAME SECTIONS ── -->
+      <!-- ── RIGHT PANEL — RECENTLY ADDED ── -->
       <div class="right-panel">
-
-        <!-- Magic: The Gathering -->
-        <div class="game-section game-mtg">
-          <div class="game-header">
-            <div class="game-icon">✦</div>
-            <div class="game-title">Magic: The Gathering</div>
-            <div class="game-tag">Store Showcase</div>
-            <div class="game-tag" style="background:transparent; border-color: rgba(201,168,76,0.2); color: var(--text-muted); font-size:0.58rem;">Shipping not included</div>
-          </div>
-          <div class="cards-grid" id="grid-mtg"></div>
+        <div class="recently-added-header">
+          <div class="recently-added-title">Recently Added</div>
+          <div class="recently-added-note">New listings from the past 20 days</div>
         </div>
+        <div class="cards-grid" id="grid-recent"></div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Pokemon -->
-        <div class="game-section game-pkm">
-          <div class="game-header">
-            <div class="game-icon">⚡</div>
-            <div class="game-title">Pokémon</div>
-            <div class="game-tag">Store Showcase</div>
-            <div class="game-tag" style="background:transparent; border-color: rgba(201,168,76,0.2); color: var(--text-muted); font-size:0.58rem;">Shipping not included</div>
-          </div>
-          <div class="cards-grid" id="grid-pkm"></div>
-        </div>
-
-        <!-- Yu-Gi-Oh -->
-        <div class="game-section game-ygo">
-          <div class="game-header">
-            <div class="game-icon">★</div>
-            <div class="game-title">Yu-Gi-Oh!</div>
-            <div class="game-tag">Store Showcase</div>
-            <div class="game-tag" style="background:transparent; border-color: rgba(201,168,76,0.2); color: var(--text-muted); font-size:0.58rem;">Shipping not included</div>
-          </div>
-          <div class="cards-grid" id="grid-ygo"></div>
-        </div>
-
-        <!-- Flesh & Blood -->
-        <div class="game-section game-fab">
-          <div class="game-header">
-            <div class="game-icon">⚔</div>
-            <div class="game-title">Flesh &amp; Blood</div>
-            <div class="game-tag">Store Showcase</div>
-            <div class="game-tag" style="background:transparent; border-color: rgba(201,168,76,0.2); color: var(--text-muted); font-size:0.58rem;">Shipping not included</div>
-          </div>
-          <div class="cards-grid" id="grid-fab"></div>
-        </div>
-
+  <!-- ════════════ PRIVATE SALE ════════════ -->
+  <section class="private-section" id="private-sale">
+    <div class="section-inner">
+      <div class="private-label">Exclusive</div>
+      <h2 class="section-title">Private Sale</h2>
+      <p class="private-desc">High-value singles available exclusively through direct contact — not listed on TCGplayer. Prices shown are firm asking prices. Click <strong>Inquire</strong> to reach out directly.</p>
+      <div class="private-list" id="private-list">
+        <div class="private-empty">No private listings at this time.</div>
       </div>
     </div>
   </section>
@@ -1796,23 +1977,29 @@
 
       const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
       const idx = h => headers.indexOf(h);
+      const now = Date.now();
+      const TWENTY_DAYS = 20 * 24 * 60 * 60 * 1000;
 
       const allCards = lines.slice(1).map(line => {
         const cols = parseCSVLine(line);
         return {
-          status: (cols[idx('status')] || 'active').trim().toLowerCase(),
           game:   (cols[idx('game')]   || '').trim().toLowerCase(),
           name:   (cols[idx('name')]   || '').trim(),
           set:    (cols[idx('set')]    || '').trim(),
           rarity: (cols[idx('rarity')] || '').trim(),
           price:  (cols[idx('price')]  || '').trim(),
-          qty:    (cols[idx('qty')]    || '').trim(),
           url:    (cols[idx('url')]    || '').trim(),
           number: (cols[idx('number')] || '').trim(),
+          date:   (cols[idx('date')]   || '').trim(),
         };
-      }).filter(c => c.game && c.name && c.status === 'active');
+      }).filter(c => {
+        if (!c.game || !c.name) return false;
+        if (!c.date) return true;
+        const added = new Date(c.date).getTime();
+        return !isNaN(added) && (now - added) <= TWENTY_DAYS;
+      });
 
-      const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
+      const CACHE_TTL = 24 * 60 * 60 * 1000;
       function loadCache(key) {
         try {
           const raw = localStorage.getItem(key);
@@ -1840,43 +2027,46 @@
       ]);
       if (ygoResult.status === 'fulfilled') ygoImages = ygoResult.value;
       if (pkmResult.status === 'fulfilled') pkmImages = pkmResult.value;
-      ['mtg', 'pkm', 'ygo', 'fab'].forEach(game => {
-        const grid = document.getElementById('grid-' + game);
-        if (!grid) return;
-        const cards = allCards.filter(c => c.game === game);
-        if (cards.length === 0) {
-          grid.innerHTML = '<div class="no-cards">No recent listings</div>';
-          return;
-        }
-        grid.innerHTML = cards.map(card => {
-          const dot = rarityToDot(card.rarity);
-          const art = GAME_ART[game];
-          const sym = GAME_SYMBOL[game];
-          const typeText = [card.rarity, card.set].filter(Boolean).join(' · ');
-          const priceHtml = card.price ? `<div class="card-price">${card.price}</div>` : '';
-          const qtyHtml = card.qty ? `<div class="card-qty">Qty: ${card.qty}</div>` : '';
-          const linkAttrs = card.url ? `href="${card.url}" target="_blank" rel="noopener noreferrer"` : '';
-          const lazyAttrs = (game === 'ygo' || game === 'pkm')
-            ? ` data-lazy-game="${game}" data-lazy-name="${card.name.replace(/"/g, '&quot;')}" data-lazy-set="${card.set.replace(/"/g, '&quot;')}" data-lazy-number="${card.number}"`
-            : '';
-          return `<a class="card-wrapper" ${linkAttrs}>
-            <div class="card"${lazyAttrs}>
-              <div class="card-dot ${dot}"></div>
-              <div class="card-art">
-                <div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>
-                <div class="card-frame"></div>
-              </div>
-            </div>
-            <div class="card-info">
-              <div class="card-name">${card.name}</div>
-              <div class="card-type">${typeText}</div>
-              <div class="card-price-row">${priceHtml}${qtyHtml}</div>
-            </div>
-          </a>`;
-        }).join('');
-      });
 
-      // Lazy-load images: fetch only when a card scrolls near the viewport
+      const GAME_BADGE = { mtg: 'MTG', pkm: 'PKM', ygo: 'YGO', fab: 'F&B' };
+
+      const grid = document.getElementById('grid-recent');
+      if (!grid) return;
+
+      if (allCards.length === 0) {
+        grid.innerHTML = '<div class="no-cards">No recent listings</div>';
+        return;
+      }
+
+      grid.innerHTML = allCards.map(card => {
+        const game = card.game;
+        const dot = rarityToDot(card.rarity);
+        const art = GAME_ART[game] || 'art-mtg-blue';
+        const sym = GAME_SYMBOL[game] || '✦';
+        const badge = GAME_BADGE[game] || game.toUpperCase();
+        const typeText = [card.rarity, card.set].filter(Boolean).join(' · ');
+        const priceHtml = card.price ? `<div class="card-price">${card.price}</div>` : '';
+        const linkAttrs = card.url ? `href="${card.url}" target="_blank" rel="noopener noreferrer"` : '';
+        const lazyAttrs = (game === 'ygo' || game === 'pkm')
+          ? ` data-lazy-game="${game}" data-lazy-name="${card.name.replace(/"/g, '&quot;')}" data-lazy-set="${card.set.replace(/"/g, '&quot;')}" data-lazy-number="${card.number}"`
+          : '';
+        return `<a class="card-wrapper" ${linkAttrs}>
+          <div class="card"${lazyAttrs}>
+            <div class="card-dot ${dot}"></div>
+            <div class="card-game-badge badge-${game}">${badge}</div>
+            <div class="card-art">
+              <div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>
+              <div class="card-frame"></div>
+            </div>
+          </div>
+          <div class="card-info">
+            <div class="card-name">${card.name}</div>
+            <div class="card-type">${typeText}</div>
+            <div class="card-price-row">${priceHtml}</div>
+          </div>
+        </a>`;
+      }).join('');
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
@@ -1925,6 +2115,59 @@
   }
 
   loadRecentCards();
+
+  async function loadPrivateListings() {
+    try {
+      const res = await fetch('private.csv');
+      if (!res.ok) return;
+      const text = await res.text();
+      const lines = text.trim().split('\n').filter(l => l.trim());
+      if (lines.length < 2) return;
+
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      const idx = h => headers.indexOf(h);
+
+      const items = lines.slice(1).map(line => {
+        const cols = parseCSVLine(line);
+        return {
+          game:      (cols[idx('game')]      || '').trim().toLowerCase(),
+          name:      (cols[idx('name')]      || '').trim(),
+          set:       (cols[idx('set')]       || '').trim(),
+          condition: (cols[idx('condition')] || '').trim(),
+          price:     (cols[idx('price')]     || '').trim(),
+          notes:     (cols[idx('notes')]     || '').trim(),
+        };
+      }).filter(i => i.name);
+
+      const list = document.getElementById('private-list');
+      if (!list || items.length === 0) return;
+
+      const GAME_LABELS = { mtg: 'MTG', pkm: 'PKM', ygo: 'YGO', fab: 'F&B' };
+
+      list.innerHTML = items.map(item => {
+        const label = GAME_LABELS[item.game] || item.game.toUpperCase();
+        const details = [item.set, item.condition].filter(Boolean).join(' · ');
+        const subject = encodeURIComponent('Private Sale Inquiry: ' + item.name);
+        const body = encodeURIComponent('Hi,\n\nI\'m interested in purchasing ' + item.name + ' listed at ' + item.price + '.\n\nPlease let me know if it\'s still available.\n\nThank you!');
+        return `<div class="private-item">
+          <div class="private-item-badge badge-${item.game}">${label}</div>
+          <div class="private-item-info">
+            <div class="private-item-name">${item.name}</div>
+            ${details ? `<div class="private-item-details">${details}</div>` : ''}
+            ${item.notes ? `<div class="private-item-notes">${item.notes}</div>` : ''}
+          </div>
+          <div class="private-item-right">
+            <div class="private-item-price">${item.price}</div>
+            <a class="private-item-inquire" href="mailto:tyranttcglimited@gmail.com?subject=${subject}&body=${body}">Inquire ↗</a>
+          </div>
+        </div>`;
+      }).join('');
+    } catch (e) {
+      console.error('Could not load private.csv:', e);
+    }
+  }
+
+  loadPrivateListings();
 
   // Construction notice popup
   const constructionBtn = document.getElementById('constructionBtn');
