@@ -1556,6 +1556,79 @@
     .card-game-fab .card-name { color: #dd5050; }
     .card-game-fab .card-type { color: rgba(200,60,60,0.6); }
 
+    /* ── CAROUSEL ── */
+    .carousel-container {
+      position: relative;
+      padding: 0 1.5rem;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 0.25rem 0 1.25rem;
+    }
+
+    .carousel-track::-webkit-scrollbar { display: none; }
+
+    .carousel-track .card-wrapper {
+      flex: 0 0 calc(25% - 0.94rem);
+      scroll-snap-align: start;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 42%;
+      transform: translateY(-50%);
+      z-index: 5;
+      background: rgba(8, 8, 8, 0.9);
+      border: 1px solid var(--gold-dark);
+      border-radius: 50%;
+      color: var(--gold);
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      line-height: 1;
+      padding: 0 0 2px 0;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .carousel-btn:hover:not([disabled]) {
+      background: rgba(201, 168, 76, 0.12);
+      border-color: var(--gold);
+    }
+
+    .carousel-btn[disabled] {
+      opacity: 0.25;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .carousel-btn-prev { left: -6px; }
+    .carousel-btn-next { right: -6px; }
+
+    @media (max-width: 1100px) {
+      .carousel-track .card-wrapper { flex: 0 0 calc(33.33% - 0.84rem); }
+    }
+
+    @media (max-width: 768px) {
+      .carousel-track .card-wrapper { flex: 0 0 calc(50% - 0.625rem); }
+    }
+
+    @media (max-width: 480px) {
+      .carousel-track { gap: 0.6rem; padding: 0.25rem 0 0.6rem; }
+      .carousel-track .card-wrapper { flex: 0 0 calc(50% - 0.3rem); }
+      .carousel-container { padding: 0 1.25rem; }
+    }
+
   </style>
 </head>
 <body>
@@ -1661,7 +1734,11 @@
           <div class="recently-added-title">Recently Added</div>
           <div class="recently-added-note">New listings from the past 20 days</div>
         </div>
-        <div class="cards-grid" id="grid-recent"></div>
+        <div class="carousel-container">
+          <button class="carousel-btn carousel-btn-prev" aria-label="Previous">&#8249;</button>
+          <div class="carousel-track" id="grid-recent"></div>
+          <button class="carousel-btn carousel-btn-next" aria-label="Next">&#8250;</button>
+        </div>
       </div>
     </div>
   </section>
@@ -2128,7 +2205,41 @@
     }
   }
 
-  loadRecentCards();
+  function initCarousel() {
+    const track = document.getElementById('grid-recent');
+    const container = track ? track.closest('.carousel-container') : null;
+    if (!container || !track) return;
+
+    const prevBtn = container.querySelector('.carousel-btn-prev');
+    const nextBtn = container.querySelector('.carousel-btn-next');
+
+    function visibleCount() {
+      const w = window.innerWidth;
+      if (w >= 1100) return 4;
+      if (w >= 768) return 3;
+      return 2;
+    }
+
+    function scrollCarousel(dir) {
+      const card = track.querySelector('.card-wrapper');
+      if (!card) return;
+      const gap = parseFloat(getComputedStyle(track).gap) || 20;
+      track.scrollBy({ left: dir * (card.offsetWidth + gap) * visibleCount(), behavior: 'smooth' });
+    }
+
+    function updateBtns() {
+      prevBtn.disabled = track.scrollLeft <= 1;
+      nextBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+    }
+
+    prevBtn.addEventListener('click', () => scrollCarousel(-1));
+    nextBtn.addEventListener('click', () => scrollCarousel(1));
+    track.addEventListener('scroll', updateBtns, { passive: true });
+    window.addEventListener('resize', updateBtns);
+    updateBtns();
+  }
+
+  loadRecentCards().then(initCarousel);
 
   async function loadPrivateListings() {
     try {
