@@ -1652,7 +1652,7 @@
     }
 
     @media (max-width: 768px) {
-      .carousel-track .card-wrapper { flex: 0 0 calc(50% - 0.625rem); }
+      .carousel-track .card-wrapper { flex: 0 0 calc(33.33% - 0.84rem); }
     }
 
     @media (max-width: 480px) {
@@ -2272,7 +2272,7 @@
     function visibleCount() {
       const w = window.innerWidth;
       if (w >= 1100) return 4;
-      if (w >= 768) return 3;
+      if (w >= 480) return 3;
       return 2;
     }
 
