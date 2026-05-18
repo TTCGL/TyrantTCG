@@ -1556,6 +1556,38 @@
     .card-game-fab .card-name { color: #dd5050; }
     .card-game-fab .card-type { color: rgba(200,60,60,0.6); }
 
+    /* ── CAROUSEL FILTERS ── */
+    .carousel-filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .filter-btn {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .filter-btn:hover:not(.active) { color: var(--text); border-color: #555; }
+
+    .filter-btn.active                    { color: var(--black); }
+    .filter-btn.active[data-game="all"]   { background: var(--gold);    border-color: var(--gold); }
+    .filter-btn.active[data-game="mtg"]   { background: #c89030;        border-color: #c89030; }
+    .filter-btn.active[data-game="pkm"]   { background: #d4aa00;        border-color: #d4aa00; }
+    .filter-btn.active[data-game="ygo"]   { background: #a070ee;        border-color: #a070ee; }
+    .filter-btn.active[data-game="fab"]   { background: #dd5050;        border-color: #dd5050; }
+
     /* ── CAROUSEL ── */
     .carousel-container {
       position: relative;
@@ -1733,6 +1765,13 @@
         <div class="recently-added-header">
           <div class="recently-added-title">Recently Added</div>
           <div class="recently-added-note">New listings from the past 20 days</div>
+        </div>
+        <div class="carousel-filters">
+          <button class="filter-btn active" data-game="all">All</button>
+          <button class="filter-btn" data-game="mtg">MTG</button>
+          <button class="filter-btn" data-game="pkm">Pokémon</button>
+          <button class="filter-btn" data-game="ygo">Yu-Gi-Oh!</button>
+          <button class="filter-btn" data-game="fab">Flesh &amp; Blood</button>
         </div>
         <div class="carousel-container">
           <button class="carousel-btn carousel-btn-prev" aria-label="Previous">&#8249;</button>
@@ -1984,6 +2023,11 @@
   loadFeedback();
 
   // ── RECENTLY LISTED CARDS (loaded from cards.csv) ──
+  let _cards = [];
+  let _ygoImages = {};
+  let _pkmImages = {};
+  let _updateCarouselBtns = null;
+
   function parseCSVLine(line) {
     const result = [];
     let current = '';
@@ -2071,7 +2115,7 @@
       const now = Date.now();
       const TWENTY_DAYS = 20 * 24 * 60 * 60 * 1000;
 
-      const allCards = lines.slice(1).map(line => {
+      _cards = lines.slice(1).map(line => {
         const cols = parseCSVLine(line);
         return {
           game:   (cols[idx('game')]   || '').trim().toLowerCase(),
@@ -2104,47 +2148,60 @@
         try { localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch {}
       }
 
-      const ygoNames = [...new Set(allCards.filter(c => c.game === 'ygo').map(c => c.name))];
-      const pkmCards = [...new Map(allCards.filter(c => c.game === 'pkm').map(c => [c.name, c])).values()];
+      const ygoNames = [...new Set(_cards.filter(c => c.game === 'ygo').map(c => c.name))];
+      const pkmCardsList = [...new Map(_cards.filter(c => c.game === 'pkm').map(c => [c.name, c])).values()];
 
-      let ygoImages = loadCache('img_ygo_v3') || {};
-      let pkmImages = loadCache('img_pkm_v3') || {};
+      _ygoImages = loadCache('img_ygo_v3') || {};
+      _pkmImages = loadCache('img_pkm_v3') || {};
 
-      const missingYgo = ygoNames.filter(n => !ygoImages[n]);
-      const missingPkm = pkmCards.filter(c => !pkmImages[c.name]);
+      const missingYgo = ygoNames.filter(n => !_ygoImages[n]);
+      const missingPkm = pkmCardsList.filter(c => !_pkmImages[c.name]);
       const [ygoResult, pkmResult] = await Promise.allSettled([
-        missingYgo.length ? fetchYGOImages(missingYgo).then(r => { ygoImages = { ...ygoImages, ...r }; saveCache('img_ygo_v3', ygoImages); return ygoImages; }) : Promise.resolve(ygoImages),
-        missingPkm.length ? fetchPKMImages(missingPkm).then(r => { pkmImages = { ...pkmImages, ...r }; saveCache('img_pkm_v3', pkmImages); return pkmImages; }) : Promise.resolve(pkmImages),
+        missingYgo.length ? fetchYGOImages(missingYgo).then(r => { _ygoImages = { ..._ygoImages, ...r }; saveCache('img_ygo_v3', _ygoImages); return _ygoImages; }) : Promise.resolve(_ygoImages),
+        missingPkm.length ? fetchPKMImages(missingPkm).then(r => { _pkmImages = { ..._pkmImages, ...r }; saveCache('img_pkm_v3', _pkmImages); return _pkmImages; }) : Promise.resolve(_pkmImages),
       ]);
-      if (ygoResult.status === 'fulfilled') ygoImages = ygoResult.value;
-      if (pkmResult.status === 'fulfilled') pkmImages = pkmResult.value;
+      if (ygoResult.status === 'fulfilled') _ygoImages = ygoResult.value;
+      if (pkmResult.status === 'fulfilled') _pkmImages = pkmResult.value;
 
-      const GAME_BADGE = { mtg: 'MTG', pkm: 'PKM', ygo: 'YGO', fab: 'F&B' };
+    } catch (e) {
+      console.error('Could not load cards.csv:', e);
+    }
+  }
 
-      const grid = document.getElementById('grid-recent');
-      if (!grid) return;
+  function renderCarousel(game) {
+    const cards = game === 'all' ? _cards : _cards.filter(c => c.game === game);
+    const grid = document.getElementById('grid-recent');
+    if (!grid) return;
 
-      if (allCards.length === 0) {
-        grid.innerHTML = '<div class="no-cards">No recent listings</div>';
-        return;
-      }
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.game === game);
+    });
 
-      grid.innerHTML = allCards.map(card => {
-        const game = card.game;
-        const dot = rarityToDot(card.rarity);
-        const art = GAME_ART[game] || 'art-mtg-blue';
-        const sym = GAME_SYMBOL[game] || '✦';
-        const badge = GAME_BADGE[game] || game.toUpperCase();
-        const typeText = [card.rarity, card.set].filter(Boolean).join(' · ');
-        const priceHtml = card.price ? `<div class="card-price">${card.price}</div>` : '';
-        const linkAttrs = card.url ? `href="${card.url}" target="_blank" rel="noopener noreferrer"` : '';
-        const lazyAttrs = (game === 'ygo' || game === 'pkm')
-          ? ` data-lazy-game="${game}" data-lazy-name="${card.name.replace(/"/g, '&quot;')}" data-lazy-set="${card.set.replace(/"/g, '&quot;')}" data-lazy-number="${card.number}"`
-          : '';
-        return `<a class="card-wrapper card-game-${game}" ${linkAttrs}>
+    if (cards.length === 0) {
+      grid.innerHTML = '<div class="no-cards">No recent listings for this game</div>';
+      grid.scrollLeft = 0;
+      if (_updateCarouselBtns) requestAnimationFrame(_updateCarouselBtns);
+      return;
+    }
+
+    const GAME_BADGE = { mtg: 'MTG', pkm: 'PKM', ygo: 'YGO', fab: 'F&B' };
+
+    grid.innerHTML = cards.map(card => {
+      const g = card.game;
+      const dot = rarityToDot(card.rarity);
+      const art = GAME_ART[g] || 'art-mtg-amber';
+      const sym = GAME_SYMBOL[g] || '✦';
+      const badge = GAME_BADGE[g] || g.toUpperCase();
+      const typeText = [card.rarity, card.set].filter(Boolean).join(' · ');
+      const priceHtml = card.price ? `<div class="card-price">${card.price}</div>` : '';
+      const linkAttrs = card.url ? `href="${card.url}" target="_blank" rel="noopener noreferrer"` : '';
+      const lazyAttrs = (g === 'ygo' || g === 'pkm')
+        ? ` data-lazy-game="${g}" data-lazy-name="${card.name.replace(/"/g, '&quot;')}" data-lazy-set="${card.set.replace(/"/g, '&quot;')}" data-lazy-number="${card.number}"`
+        : '';
+      return `<a class="card-wrapper card-game-${g}" ${linkAttrs}>
           <div class="card"${lazyAttrs}>
             <div class="card-dot ${dot}"></div>
-            <div class="card-game-badge badge-${game}">${badge}</div>
+            <div class="card-game-badge badge-${g}">${badge}</div>
             <div class="card-art">
               <div class="card-art-bg ${art}"><div class="card-art-symbol">${sym}</div><div class="card-art-glow"></div></div>
               <div class="card-frame"></div>
@@ -2156,53 +2213,52 @@
             <div class="card-price-row">${priceHtml}</div>
           </div>
         </a>`;
-      }).join('');
+    }).join('');
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          const card = entry.target;
-          observer.unobserve(card);
-          const game   = card.dataset.lazyGame;
-          const name   = card.dataset.lazyName;
-          const set    = card.dataset.lazySet;
-          const number = card.dataset.lazyNumber;
-          const artDiv = card.querySelector('.card-art');
+    grid.scrollLeft = 0;
+    if (_updateCarouselBtns) requestAnimationFrame(_updateCarouselBtns);
 
-          function applyImage(imgUrl) {
-            if (!imgUrl || !artDiv) return;
-            const bg = artDiv.querySelector('.card-art-bg');
-            if (!bg) return;
-            const img = document.createElement('img');
-            img.className = 'card-art-img';
-            img.src = imgUrl;
-            img.alt = name;
-            bg.replaceWith(img);
-          }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const card = entry.target;
+        observer.unobserve(card);
+        const g      = card.dataset.lazyGame;
+        const name   = card.dataset.lazyName;
+        const set    = card.dataset.lazySet;
+        const number = card.dataset.lazyNumber;
+        const artDiv = card.querySelector('.card-art');
 
-          if (game === 'ygo') {
-            fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?name=' + encodeURIComponent(name))
-              .then(r => r.ok ? r.json() : null)
-              .then(d => applyImage(d?.data?.[0]?.card_images?.[0]?.image_url))
-              .catch(() => {});
-          } else if (game === 'pkm') {
-            const setId = PKM_SET_IDS[set];
-            const query = setId
-              ? `name:"${name}" set.id:${setId}${number ? ` number:${number}` : ''}`
-              : `name:"${name}"`;
-            fetch('https://api.pokemontcg.io/v2/cards?q=' + encodeURIComponent(query) + '&pageSize=1')
-              .then(r => r.ok ? r.json() : null)
-              .then(d => applyImage(d?.data?.[0]?.images?.large))
-              .catch(() => {});
-          }
-        });
-      }, { rootMargin: '200px' });
+        function applyImage(imgUrl) {
+          if (!imgUrl || !artDiv) return;
+          const bg = artDiv.querySelector('.card-art-bg');
+          if (!bg) return;
+          const img = document.createElement('img');
+          img.className = 'card-art-img';
+          img.src = imgUrl;
+          img.alt = name;
+          bg.replaceWith(img);
+        }
 
-      document.querySelectorAll('.card[data-lazy-game]').forEach(card => observer.observe(card));
+        if (g === 'ygo') {
+          fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?name=' + encodeURIComponent(name))
+            .then(r => r.ok ? r.json() : null)
+            .then(d => applyImage(d?.data?.[0]?.card_images?.[0]?.image_url))
+            .catch(() => {});
+        } else if (g === 'pkm') {
+          const setId = PKM_SET_IDS[set];
+          const query = setId
+            ? `name:"${name}" set.id:${setId}${number ? ` number:${number}` : ''}`
+            : `name:"${name}"`;
+          fetch('https://api.pokemontcg.io/v2/cards?q=' + encodeURIComponent(query) + '&pageSize=1')
+            .then(r => r.ok ? r.json() : null)
+            .then(d => applyImage(d?.data?.[0]?.images?.large))
+            .catch(() => {});
+        }
+      });
+    }, { rootMargin: '200px' });
 
-    } catch (e) {
-      console.error('Could not load cards.csv:', e);
-    }
+    document.querySelectorAll('#grid-recent .card[data-lazy-game]').forEach(card => observer.observe(card));
   }
 
   function initCarousel() {
@@ -2232,6 +2288,8 @@
       nextBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
     }
 
+    _updateCarouselBtns = updateBtns;
+
     prevBtn.addEventListener('click', () => scrollCarousel(-1));
     nextBtn.addEventListener('click', () => scrollCarousel(1));
     track.addEventListener('scroll', updateBtns, { passive: true });
@@ -2239,7 +2297,13 @@
     updateBtns();
   }
 
-  loadRecentCards().then(initCarousel);
+  loadRecentCards().then(() => {
+    renderCarousel('all');
+    initCarousel();
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => renderCarousel(btn.dataset.game));
+    });
+  });
 
   async function loadPrivateListings() {
     try {
