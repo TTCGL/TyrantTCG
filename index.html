@@ -1544,6 +1544,18 @@
       .private-item { flex-wrap: wrap; }
       .private-item-right { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; }
     }
+    .card-game-mtg .card-name { color: #c89030; }
+    .card-game-mtg .card-type { color: rgba(200,160,40,0.6); }
+
+    .card-game-pkm .card-name { color: #d4aa00; }
+    .card-game-pkm .card-type { color: rgba(200,160,0,0.55); }
+
+    .card-game-ygo .card-name { color: #a070ee; }
+    .card-game-ygo .card-type { color: rgba(140,90,200,0.6); }
+
+    .card-game-fab .card-name { color: #dd5050; }
+    .card-game-fab .card-type { color: rgba(200,60,60,0.6); }
+
   </style>
 </head>
 <body>
@@ -2052,7 +2064,7 @@
         const lazyAttrs = (game === 'ygo' || game === 'pkm')
           ? ` data-lazy-game="${game}" data-lazy-name="${card.name.replace(/"/g, '&quot;')}" data-lazy-set="${card.set.replace(/"/g, '&quot;')}" data-lazy-number="${card.number}"`
           : '';
-        return `<a class="card-wrapper" ${linkAttrs}>
+        return `<a class="card-wrapper card-game-${game}" ${linkAttrs}>
           <div class="card"${lazyAttrs}>
             <div class="card-dot ${dot}"></div>
             <div class="card-game-badge badge-${game}">${badge}</div>
