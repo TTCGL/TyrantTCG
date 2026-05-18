@@ -908,11 +908,13 @@
     .art-mtg-blue   { background: linear-gradient(145deg, #040e22, #0c2860, #1a50b0); }
     .art-mtg-black  { background: linear-gradient(145deg, #060008, #180030, #360060); }
     .art-mtg-red    { background: linear-gradient(145deg, #1e0200, #6a1000, #b02808); }
+    .art-mtg-amber  { background: linear-gradient(145deg, #120c00, #3c2800, #6e4810); }
 
     /* Pokemon art */
     .art-pkm-fire   { background: linear-gradient(145deg, #1e0500, #6e1800, #cc4010); }
     .art-pkm-water  { background: linear-gradient(145deg, #000e1e, #002a60, #0858b8); }
     .art-pkm-psych  { background: linear-gradient(145deg, #100018, #380050, #8010a8); }
+    .art-pkm-yellow { background: linear-gradient(145deg, #141000, #3c2e00, #6e5200); }
 
     /* Yu-Gi-Oh art */
     .art-ygo-dark   { background: linear-gradient(145deg, #080010, #1a0040, #380088); }
@@ -1373,10 +1375,10 @@
       z-index: 1;
     }
 
-    .badge-mtg { background: rgba(29,126,216,0.25); color: #60aaee; border: 1px solid rgba(29,126,216,0.4); }
-    .badge-pkm { background: rgba(227,53,13,0.25);  color: #f06040; border: 1px solid rgba(227,53,13,0.4); }
-    .badge-ygo { background: rgba(124,58,237,0.25); color: #a070ee; border: 1px solid rgba(124,58,237,0.4); }
-    .badge-fab { background: rgba(185,28,28,0.25);  color: #dd5050; border: 1px solid rgba(185,28,28,0.4); }
+    .badge-mtg { background: rgba(180,130,20,0.22);  color: #c89030; border: 1px solid rgba(180,130,20,0.4); }
+    .badge-pkm { background: rgba(200,160,0,0.18);   color: #d4aa00; border: 1px solid rgba(200,160,0,0.4); }
+    .badge-ygo { background: rgba(124,58,237,0.25);  color: #a070ee; border: 1px solid rgba(124,58,237,0.4); }
+    .badge-fab { background: rgba(185,28,28,0.25);   color: #dd5050; border: 1px solid rgba(185,28,28,0.4); }
 
     /* ── PRIVATE SALE SECTION ── */
     .private-section {
@@ -1915,7 +1917,7 @@
     return 'dot-common';
   }
 
-  const GAME_ART   = { mtg: 'art-mtg-blue', pkm: 'art-pkm-fire', ygo: 'art-ygo-dark', fab: 'art-fab-red' };
+  const GAME_ART   = { mtg: 'art-mtg-amber', pkm: 'art-pkm-yellow', ygo: 'art-ygo-dark', fab: 'art-fab-red' };
   const GAME_SYMBOL = { mtg: '✦', pkm: '⚡', ygo: '★', fab: '⚔' };
 
   async function fetchYGOImages(names) {
