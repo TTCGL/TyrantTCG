@@ -22,7 +22,7 @@
       --text-muted: #888;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       background: var(--black);
@@ -1606,12 +1606,14 @@
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       padding: 0.25rem 0 1.25rem;
+      touch-action: pan-x pinch-zoom;
+      overscroll-behavior-x: contain;
     }
 
     .carousel-track::-webkit-scrollbar { display: none; }
 
     .carousel-track .card-wrapper {
-      flex: 0 0 var(--carousel-card-w, 220px);
+      flex: 0 0 var(--carousel-card-w, 30vw);
       scroll-snap-align: start;
     }
 
