@@ -1591,19 +1591,65 @@
     .filter-btn.active[data-game="fab"]   { background: #dd5050;        border-color: #dd5050; }
 
     /* ── CAROUSEL ── */
-    .recent-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+    .carousel-outer {
+      position: relative;
+    }
+
+    .carousel-viewport {
+      overflow: hidden;
+    }
+
+    .carousel-strip {
+      display: flex;
       gap: 1.25rem;
       padding: 0.25rem 0 1.25rem;
+      transition: transform 0.35s ease;
+      user-select: none;
     }
 
-    @media (max-width: 1100px) {
-      .recent-grid { grid-template-columns: repeat(3, 1fr); }
+    .carousel-strip .card-wrapper {
+      flex: 0 0 var(--card-w, 22vw);
     }
+
+    .carousel-btn {
+      position: absolute;
+      top: calc(50% - 0.75rem);
+      transform: translateY(-50%);
+      z-index: 5;
+      background: rgba(8, 8, 8, 0.9);
+      border: 1px solid var(--gold-dark);
+      border-radius: 50%;
+      color: var(--gold);
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      line-height: 1;
+      padding: 0 0 2px 0;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .carousel-btn:hover:not([disabled]) {
+      background: rgba(201, 168, 76, 0.12);
+      border-color: var(--gold);
+    }
+
+    .carousel-btn[disabled] {
+      opacity: 0.25;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .carousel-btn-prev { left: -18px; }
+    .carousel-btn-next { right: -18px; }
 
     @media (max-width: 600px) {
-      .recent-grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+      .carousel-strip { gap: 0.6rem; }
+      .carousel-btn-prev { left: -14px; }
+      .carousel-btn-next { right: -14px; }
     }
 
   </style>
@@ -1718,7 +1764,13 @@
           <button class="filter-btn" data-game="ygo">Yu-Gi-Oh!</button>
           <button class="filter-btn" data-game="fab">Flesh &amp; Blood</button>
         </div>
-        <div class="recent-grid" id="grid-recent"></div>
+        <div class="carousel-outer">
+          <button class="carousel-btn carousel-btn-prev" aria-label="Previous">&#8249;</button>
+          <div class="carousel-viewport">
+            <div class="carousel-strip" id="grid-recent"></div>
+          </div>
+          <button class="carousel-btn carousel-btn-next" aria-label="Next">&#8250;</button>
+        </div>
       </div>
     </div>
   </section>
@@ -1967,6 +2019,7 @@
   let _cards = [];
   let _ygoImages = {};
   let _pkmImages = {};
+  let _carouselReset = null;
 
   function parseCSVLine(line) {
     const result = [];
@@ -2153,6 +2206,8 @@
         </a>`;
     }).join('');
 
+    if (_carouselReset) _carouselReset();
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
@@ -2196,8 +2251,77 @@
     document.querySelectorAll('#grid-recent .card[data-lazy-game]').forEach(card => observer.observe(card));
   }
 
+  function initCarousel() {
+    const viewport = document.querySelector('.carousel-viewport');
+    const strip    = document.getElementById('grid-recent');
+    const prevBtn  = document.querySelector('.carousel-btn-prev');
+    const nextBtn  = document.querySelector('.carousel-btn-next');
+    if (!viewport || !strip || !prevBtn || !nextBtn) return;
+
+    let page = 0;
+
+    function perPage() { return window.innerWidth >= 1100 ? 4 : 3; }
+
+    function getGapPx() {
+      const fs = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      return (window.innerWidth <= 600 ? 0.6 : 1.25) * fs;
+    }
+
+    function computeCardWidth() {
+      const n   = perPage();
+      const gap = getGapPx();
+      const cw  = Math.floor((viewport.clientWidth - gap * (n - 1)) / n);
+      document.documentElement.style.setProperty('--card-w', cw + 'px');
+      return cw;
+    }
+
+    function cardCount() { return strip.querySelectorAll('.card-wrapper').length; }
+
+    function totalPages() { return Math.max(1, Math.ceil(cardCount() / perPage())); }
+
+    function goTo(p) {
+      const cw  = computeCardWidth();
+      const gap = getGapPx();
+      const n   = perPage();
+      page = Math.max(0, Math.min(p, totalPages() - 1));
+      strip.style.transform = `translateX(-${page * n * (cw + gap)}px)`;
+      prevBtn.disabled = page === 0;
+      nextBtn.disabled = page >= totalPages() - 1;
+    }
+
+    function reset() {
+      page = 0;
+      strip.style.transition = 'none';
+      strip.style.transform  = 'translateX(0)';
+      requestAnimationFrame(() => {
+        strip.style.transition = '';
+        computeCardWidth();
+        prevBtn.disabled = true;
+        nextBtn.disabled = totalPages() <= 1;
+      });
+    }
+
+    _carouselReset = reset;
+
+    prevBtn.addEventListener('click', () => goTo(page - 1));
+    nextBtn.addEventListener('click', () => goTo(page + 1));
+
+    // Swipe support via touch events
+    let touchX = 0;
+    strip.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+    strip.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 40) goTo(dx < 0 ? page + 1 : page - 1);
+    }, { passive: true });
+
+    window.addEventListener('resize', () => goTo(page));
+
+    reset();
+  }
+
   loadRecentCards().then(() => {
     renderCarousel('all');
+    initCarousel();
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => renderCarousel(btn.dataset.game));
     });
