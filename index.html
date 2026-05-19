@@ -1599,6 +1599,7 @@
     .carousel-track {
       display: flex;
       gap: 1.25rem;
+      width: 100%;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
@@ -1610,7 +1611,7 @@
     .carousel-track::-webkit-scrollbar { display: none; }
 
     .carousel-track .card-wrapper {
-      flex: 0 0 calc(25% - 0.94rem);
+      flex: 0 0 var(--carousel-card-w, 220px);
       scroll-snap-align: start;
     }
 
@@ -1649,17 +1650,8 @@
     .carousel-btn-prev { left: -6px; }
     .carousel-btn-next { right: -6px; }
 
-    @media (max-width: 1100px) {
-      .carousel-track .card-wrapper { flex: 0 0 calc(33.33% - 0.84rem); }
-    }
-
-    @media (max-width: 768px) {
-      .carousel-track .card-wrapper { flex: 0 0 calc(33.33% - 0.84rem); }
-    }
-
     @media (max-width: 480px) {
       .carousel-track { gap: 0.6rem; padding: 0.25rem 0 0.6rem; }
-      .carousel-track .card-wrapper { flex: 0 0 calc(50% - 0.3rem); }
       .carousel-container { padding: 0 1.25rem; }
     }
 
@@ -2299,12 +2291,33 @@
     updateBtns();
   }
 
+  function setCarouselCardWidth() {
+    const container = document.querySelector('.carousel-container');
+    if (!container) return;
+    const w = window.innerWidth;
+    const count  = w >= 1100 ? 4 : w >= 480 ? 3 : 2;
+    const gapRem = w <= 480 ? 0.6 : 1.25;
+    const padRem = w <= 480 ? 1.25 : 1.5;
+    const fs     = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    const gapPx  = gapRem * fs;
+    const padPx  = 2 * padRem * fs;
+    const availPx = container.clientWidth - padPx;
+    const cardPx  = Math.floor((availPx - gapPx * (count - 1)) / count);
+    document.documentElement.style.setProperty('--carousel-card-w', cardPx + 'px');
+  }
+
   loadRecentCards().then(() => {
+    setCarouselCardWidth();
     renderCarousel('all');
     initCarousel();
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => renderCarousel(btn.dataset.game));
     });
+  });
+
+  window.addEventListener('resize', () => {
+    setCarouselCardWidth();
+    if (_updateCarouselBtns) _updateCarouselBtns();
   });
 
   async function loadPrivateListings() {
