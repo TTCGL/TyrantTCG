@@ -1650,7 +1650,7 @@
     .carousel-btn-prev { left: -6px; }
     .carousel-btn-next { right: -6px; }
 
-    @media (max-width: 480px) {
+    @media (max-width: 600px) {
       .carousel-track { gap: 0.6rem; padding: 0.25rem 0 0.6rem; }
       .carousel-container { padding: 0 1.25rem; }
     }
@@ -2264,10 +2264,7 @@
     const nextBtn = container.querySelector('.carousel-btn-next');
 
     function visibleCount() {
-      const w = window.innerWidth;
-      if (w >= 1100) return 4;
-      if (w >= 480) return 3;
-      return 2;
+      return window.innerWidth >= 1100 ? 4 : 3;
     }
 
     function scrollCarousel(dir) {
@@ -2295,9 +2292,9 @@
     const container = document.querySelector('.carousel-container');
     if (!container) return;
     const w = window.innerWidth;
-    const count  = w >= 1100 ? 4 : w >= 480 ? 3 : 2;
-    const gapRem = w <= 480 ? 0.6 : 1.25;
-    const padRem = w <= 480 ? 1.25 : 1.5;
+    const count  = w >= 1100 ? 4 : 3;
+    const gapRem = w <= 600 ? 0.6 : 1.25;
+    const padRem = w <= 600 ? 1.25 : 1.5;
     const fs     = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
     const gapPx  = gapRem * fs;
     const padPx  = 2 * padRem * fs;
