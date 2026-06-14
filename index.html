@@ -1626,19 +1626,51 @@
               <stop offset="50%" stop-color="#c9a84c"/>
               <stop offset="100%" stop-color="#8b6010"/>
             </linearGradient>
+            <linearGradient id="he-stone-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#c8b4a0"/>
+              <stop offset="50%" stop-color="#9a8472"/>
+              <stop offset="100%" stop-color="#6a5848"/>
+            </linearGradient>
           </defs>
+          <!-- Stone castle -->
           <g filter="url(#he-stone)">
             <path d="M8,172 L8,15 L52,15 L52,55 L78,55 L78,15 L122,15 L122,55 L148,55 L148,15 L192,15 L192,172 Z"
-                  fill="url(#he-gold)" stroke="#f8eaa0" stroke-width="1.5"/>
-            <line x1="8" y1="90" x2="192" y2="90" stroke="#8b6010" stroke-width="1" opacity="0.5"/>
-            <line x1="8" y1="130" x2="192" y2="130" stroke="#8b6010" stroke-width="1" opacity="0.5"/>
-            <path d="M90,158 L90,108 Q100,82 110,108 L110,158 Z" fill="#0d0a05" opacity="0.6"/>
-            <path d="M66,15 L66,3 L80,10 L100,0 L120,10 L134,3 L134,15 Z"
-                  fill="#ffe070" stroke="#f8eaa0" stroke-width="1.2"/>
-            <ellipse cx="100" cy="1"  rx="4"   ry="3.5" fill="#cc1100"/>
-            <ellipse cx="80"  cy="10" rx="2.8" ry="2.5" fill="#cc1100"/>
-            <ellipse cx="120" cy="10" rx="2.8" ry="2.5" fill="#cc1100"/>
+                  fill="url(#he-stone-fill)" stroke="#c9a84c" stroke-width="1.5"/>
+            <!-- Gold battlement tops -->
+            <line x1="8"   y1="16" x2="52"  y2="16" stroke="#f8eaa0" stroke-width="3" opacity="0.65"/>
+            <line x1="78"  y1="16" x2="122" y2="16" stroke="#f8eaa0" stroke-width="3" opacity="0.65"/>
+            <line x1="148" y1="16" x2="192" y2="16" stroke="#f8eaa0" stroke-width="3" opacity="0.65"/>
+            <line x1="8" y1="90" x2="192" y2="90" stroke="#8b6010" stroke-width="1" opacity="0.4"/>
+            <line x1="8" y1="130" x2="192" y2="130" stroke="#8b6010" stroke-width="1" opacity="0.4"/>
+            <!-- Gate arch -->
+            <path d="M90,158 L90,108 Q100,82 110,108 L110,158 Z" fill="#0d0a05" opacity="0.65"/>
+            <!-- Gold arch trim -->
+            <path d="M90,108 Q100,80 110,108" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+            <!-- Red base band -->
             <rect x="8" y="165" width="184" height="7" rx="1" fill="#880000"/>
+          </g>
+          <!-- King card — centered in gate -->
+          <g filter="url(#he-stone)">
+            <rect x="84" y="79" width="32" height="72" rx="3" fill="url(#he-gold)" stroke="#f8eaa0" stroke-width="1.5"/>
+            <rect x="86" y="81" width="28" height="8" rx="1" fill="#14100a" opacity="0.55"/>
+            <!-- Crown on card face -->
+            <path d="M89,99 L89,91 L92,94 L96,88 L100,93 L104,88 L108,94 L111,91 L111,99 Z" fill="#cc1100"/>
+            <rect x="88" y="97" width="24" height="4" rx="1" fill="#cc1100"/>
+            <!-- Scepter -->
+            <circle cx="100" cy="103" r="4" fill="none" stroke="#cc1100" stroke-width="1.2"/>
+            <line x1="100" y1="107" x2="100" y2="136" stroke="#cc1100" stroke-width="2"/>
+            <line x1="94"  y1="114" x2="106" y2="114" stroke="#cc1100" stroke-width="1.5"/>
+            <!-- Stat line -->
+            <line x1="86" y1="143" x2="114" y2="143" stroke="#8b6010" stroke-width="0.8" opacity="0.65"/>
+            <!-- Arms -->
+            <path d="M85,101 Q76,99 71,96 L69,100 Q74,104 84,107 Z" fill="#c9a84c"/>
+            <path d="M115,101 Q124,99 129,96 L131,100 Q126,104 116,107 Z" fill="#c9a84c"/>
+            <!-- Left leg -->
+            <path d="M91,151 Q87,162 85,167 L91,169 Q93,163 97,152 Z" fill="#c9a84c"/>
+            <path d="M85,167 Q82,172 81,175 L89,175 L91,169 Z" fill="#c9a84c"/>
+            <!-- Right leg -->
+            <path d="M109,151 Q113,162 115,167 L109,169 Q107,163 103,152 Z" fill="#c9a84c"/>
+            <path d="M115,167 Q118,172 119,175 L111,175 L109,169 Z" fill="#c9a84c"/>
           </g>
         </svg>
       </a>
@@ -1675,50 +1707,76 @@
           <stop offset="50%" stop-color="#c9a84c"/>
           <stop offset="100%" stop-color="#8b6010"/>
         </linearGradient>
-        <linearGradient id="cl-crown" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#ffe878"/>
-          <stop offset="100%" stop-color="#c9a84c"/>
+        <linearGradient id="cl-stone-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#c8b4a0"/>
+          <stop offset="50%" stop-color="#9a8472"/>
+          <stop offset="100%" stop-color="#6a5848"/>
         </linearGradient>
       </defs>
 
-      <!-- CROWN — large 5-peak, centered at x=290, base at y=90 -->
-      <g filter="url(#cl-stone)">
-        <path d="M200,90 L200,52 L210,28 L228,52 L245,40 L265,55 L290,8 L315,55 L335,40 L352,52 L370,28 L380,52 L380,90 Z"
-              fill="url(#cl-crown)" stroke="#f8eaa0" stroke-width="1.8"/>
-        <rect x="194" y="78" width="192" height="18" rx="5" fill="#c9a84c" stroke="#f8eaa0" stroke-width="1"/>
-        <ellipse cx="290" cy="9"  rx="8"   ry="7"   fill="#cc1100"/>
-        <ellipse cx="210" cy="29" rx="5.5" ry="5"   fill="#cc1100"/>
-        <ellipse cx="370" cy="29" rx="5.5" ry="5"   fill="#cc1100"/>
-        <ellipse cx="245" cy="41" rx="4"   ry="3.5" fill="#cc8800"/>
-        <ellipse cx="335" cy="41" rx="4"   ry="3.5" fill="#cc8800"/>
-      </g>
-
-      <!-- CASTLE — gold filled, 5 merlons (88–148,174–234,260–320,346–406,432–492), crennel y=140, tops y=90 -->
+      <!-- CASTLE — stone filled, 5 merlons, gold and red trim -->
       <g filter="url(#cl-stone)">
         <path d="M88,290 L88,90 L148,90 L148,140 L174,140 L174,90 L234,90 L234,140 L260,140 L260,90
                  L320,90 L320,140 L346,140 L346,90 L406,90 L406,140 L432,140 L432,90 L492,90 L492,290 Z"
-              fill="url(#cl-gold)" stroke="#f8eaa0" stroke-width="1.8"/>
+              fill="url(#cl-stone-fill)" stroke="#c9a84c" stroke-width="1.8"/>
+        <!-- Gold battlement tops -->
+        <line x1="88"  y1="91" x2="148" y2="91" stroke="#f8eaa0" stroke-width="4" opacity="0.65"/>
+        <line x1="174" y1="91" x2="234" y2="91" stroke="#f8eaa0" stroke-width="4" opacity="0.65"/>
+        <line x1="260" y1="91" x2="320" y2="91" stroke="#f8eaa0" stroke-width="4" opacity="0.65"/>
+        <line x1="346" y1="91" x2="406" y2="91" stroke="#f8eaa0" stroke-width="4" opacity="0.65"/>
+        <line x1="432" y1="91" x2="492" y2="91" stroke="#f8eaa0" stroke-width="4" opacity="0.65"/>
+        <!-- Gold parapet walk line -->
+        <line x1="88" y1="141" x2="492" y2="141" stroke="#c9a84c" stroke-width="1.5" opacity="0.5"/>
         <!-- Masonry courses -->
-        <line x1="88" y1="175" x2="492" y2="175" stroke="#8b6010" stroke-width="1.2" opacity="0.55"/>
-        <line x1="88" y1="215" x2="492" y2="215" stroke="#8b6010" stroke-width="1.2" opacity="0.55"/>
-        <line x1="88" y1="255" x2="492" y2="255" stroke="#8b6010" stroke-width="1.2" opacity="0.55"/>
+        <line x1="88" y1="175" x2="492" y2="175" stroke="#5a4838" stroke-width="1.2" opacity="0.55"/>
+        <line x1="88" y1="215" x2="492" y2="215" stroke="#5a4838" stroke-width="1.2" opacity="0.55"/>
+        <line x1="88" y1="255" x2="492" y2="255" stroke="#5a4838" stroke-width="1.2" opacity="0.55"/>
         <!-- Staggered vertical seams -->
-        <line x1="150" y1="140" x2="150" y2="175" stroke="#8b6010" stroke-width="0.8" opacity="0.4"/>
-        <line x1="270" y1="140" x2="270" y2="175" stroke="#8b6010" stroke-width="0.8" opacity="0.4"/>
-        <line x1="390" y1="140" x2="390" y2="175" stroke="#8b6010" stroke-width="0.8" opacity="0.4"/>
-        <line x1="210" y1="175" x2="210" y2="215" stroke="#8b6010" stroke-width="0.8" opacity="0.4"/>
-        <line x1="330" y1="175" x2="330" y2="215" stroke="#8b6010" stroke-width="0.8" opacity="0.4"/>
-        <line x1="450" y1="175" x2="450" y2="215" stroke="#8b6010" stroke-width="0.8" opacity="0.4"/>
-        <!-- Arrow-slit windows (left and right bays) -->
+        <line x1="150" y1="140" x2="150" y2="175" stroke="#5a4838" stroke-width="0.8" opacity="0.4"/>
+        <line x1="270" y1="140" x2="270" y2="175" stroke="#5a4838" stroke-width="0.8" opacity="0.4"/>
+        <line x1="390" y1="140" x2="390" y2="175" stroke="#5a4838" stroke-width="0.8" opacity="0.4"/>
+        <line x1="210" y1="175" x2="210" y2="215" stroke="#5a4838" stroke-width="0.8" opacity="0.4"/>
+        <line x1="330" y1="175" x2="330" y2="215" stroke="#5a4838" stroke-width="0.8" opacity="0.4"/>
+        <line x1="450" y1="175" x2="450" y2="215" stroke="#5a4838" stroke-width="0.8" opacity="0.4"/>
+        <!-- Arrow-slit windows -->
         <path d="M124,278 L124,178 L131,160 L138,178 L138,278 Z" fill="#0d0a05" opacity="0.6"/>
         <path d="M196,274 L196,182 L204,164 L212,182 L212,274 Z" fill="#0d0a05" opacity="0.6"/>
         <path d="M368,274 L368,182 L376,164 L384,182 L384,274 Z" fill="#0d0a05" opacity="0.6"/>
         <path d="M442,278 L442,178 L449,160 L456,178 L456,278 Z" fill="#0d0a05" opacity="0.6"/>
         <!-- Gate arch (pointed, centered x=290) -->
-        <path d="M248,290 L248,234 Q248,194 290,190 Q332,194 332,234 L332,290 Z"
-              fill="#0d0a05" opacity="0.68"/>
+        <path d="M248,290 L248,234 Q248,194 290,190 Q332,194 332,234 L332,290 Z" fill="#0d0a05" opacity="0.68"/>
+        <!-- Gold arch trim -->
+        <path d="M248,234 Q248,194 290,190 Q332,194 332,234" fill="none" stroke="#c9a84c" stroke-width="2"/>
         <!-- Red base band -->
         <rect x="88" y="283" width="404" height="7" rx="1" fill="#880000"/>
+      </g>
+
+      <!-- KING CARD — centered in front of gate -->
+      <g filter="url(#cl-stone)">
+        <rect x="256" y="148" width="68" height="100" rx="6" fill="url(#cl-gold)" stroke="#f8eaa0" stroke-width="2"/>
+        <rect x="259" y="151" width="62" height="11" rx="2" fill="#14100a" opacity="0.55"/>
+        <text x="290" y="160" font-size="7" text-anchor="middle" fill="#f8d060" font-family="Cinzel,Georgia,serif">THE KING</text>
+        <!-- Crown artwork -->
+        <path d="M267,192 L267,178 L273,183 L280,172 L290,179 L300,172 L307,183 L313,178 L313,192 Z" fill="#cc1100"/>
+        <rect x="266" y="189" width="48" height="7" rx="2" fill="#cc1100"/>
+        <!-- Scepter -->
+        <circle cx="290" cy="198" r="6" fill="none" stroke="#cc1100" stroke-width="1.8"/>
+        <line x1="290" y1="204" x2="290" y2="234" stroke="#cc1100" stroke-width="2.5"/>
+        <line x1="278" y1="213" x2="302" y2="213" stroke="#cc1100" stroke-width="2"/>
+        <!-- Stat line -->
+        <line x1="259" y1="236" x2="321" y2="236" stroke="#8b6010" stroke-width="1" opacity="0.65"/>
+        <text x="290" y="246" font-size="6.5" text-anchor="middle" fill="#f8d060" font-family="Cinzel,Georgia,serif">★★★★★</text>
+        <!-- Arms — regal spread -->
+        <path d="M257,179 Q241,174 230,168 L226,176 Q238,182 256,189 Z" fill="#c9a84c"/>
+        <path d="M323,179 Q339,174 350,168 L354,176 Q342,182 324,189 Z" fill="#c9a84c"/>
+        <!-- Left leg -->
+        <path d="M271,248 Q266,268 264,276 L272,279 Q273,271 279,250 Z" fill="#c9a84c"/>
+        <path d="M264,276 Q259,286 256,293 L266,296 Q267,288 272,279 Z" fill="#c9a84c"/>
+        <path d="M256,293 Q250,295 248,298 L267,298 L266,293 Z" fill="#c9a84c"/>
+        <!-- Right leg -->
+        <path d="M309,248 Q314,268 316,276 L308,279 Q306,271 301,250 Z" fill="#c9a84c"/>
+        <path d="M316,276 Q320,286 323,293 L313,296 Q312,288 308,279 Z" fill="#c9a84c"/>
+        <path d="M323,293 Q329,295 331,298 L312,298 L313,293 Z" fill="#c9a84c"/>
       </g>
 
       <!-- LEFT CARD WARRIOR — Monster card, filled limbs -->
@@ -2060,21 +2118,51 @@
               <stop offset="50%" stop-color="#c9a84c"/>
               <stop offset="100%" stop-color="#8b6010"/>
             </linearGradient>
+            <linearGradient id="fe-stone-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#c8b4a0"/>
+              <stop offset="50%" stop-color="#9a8472"/>
+              <stop offset="100%" stop-color="#6a5848"/>
+            </linearGradient>
           </defs>
-          <!-- Solid gold castle: 3 merlons (8–52, 78–122, 148–192), crennel y=55, tops y=15 -->
+          <!-- Stone castle: 3 merlons, gold and red trim -->
           <g filter="url(#fe-stone)">
             <path d="M8,172 L8,15 L52,15 L52,55 L78,55 L78,15 L122,15 L122,55 L148,55 L148,15 L192,15 L192,172 Z"
-                  fill="url(#fe-gold)" stroke="#f8eaa0" stroke-width="1.5"/>
-            <line x1="8" y1="90" x2="192" y2="90" stroke="#8b6010" stroke-width="1" opacity="0.5"/>
-            <line x1="8" y1="130" x2="192" y2="130" stroke="#8b6010" stroke-width="1" opacity="0.5"/>
-            <path d="M90,158 L90,108 Q100,82 110,108 L110,158 Z" fill="#0d0a05" opacity="0.6"/>
-            <!-- Crown: 3 peaks above center merlon (cx=100) -->
-            <path d="M66,15 L66,3 L80,10 L100,0 L120,10 L134,3 L134,15 Z"
-                  fill="#ffe070" stroke="#f8eaa0" stroke-width="1.2"/>
-            <ellipse cx="100" cy="1"  rx="4"   ry="3.5" fill="#cc1100"/>
-            <ellipse cx="80"  cy="10" rx="2.8" ry="2.5" fill="#cc1100"/>
-            <ellipse cx="120" cy="10" rx="2.8" ry="2.5" fill="#cc1100"/>
+                  fill="url(#fe-stone-fill)" stroke="#c9a84c" stroke-width="1.5"/>
+            <!-- Gold battlement tops -->
+            <line x1="8"   y1="16" x2="52"  y2="16" stroke="#f8eaa0" stroke-width="3" opacity="0.65"/>
+            <line x1="78"  y1="16" x2="122" y2="16" stroke="#f8eaa0" stroke-width="3" opacity="0.65"/>
+            <line x1="148" y1="16" x2="192" y2="16" stroke="#f8eaa0" stroke-width="3" opacity="0.65"/>
+            <line x1="8" y1="90" x2="192" y2="90" stroke="#5a4838" stroke-width="1" opacity="0.4"/>
+            <line x1="8" y1="130" x2="192" y2="130" stroke="#5a4838" stroke-width="1" opacity="0.4"/>
+            <!-- Gate arch -->
+            <path d="M90,158 L90,108 Q100,82 110,108 L110,158 Z" fill="#0d0a05" opacity="0.65"/>
+            <!-- Gold arch trim -->
+            <path d="M90,108 Q100,80 110,108" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+            <!-- Red base band -->
             <rect x="8" y="165" width="184" height="7" rx="1" fill="#880000"/>
+          </g>
+          <!-- King card — centered in gate -->
+          <g filter="url(#fe-stone)">
+            <rect x="84" y="79" width="32" height="72" rx="3" fill="url(#fe-gold)" stroke="#f8eaa0" stroke-width="1.5"/>
+            <rect x="86" y="81" width="28" height="8" rx="1" fill="#14100a" opacity="0.55"/>
+            <!-- Crown on card face -->
+            <path d="M89,99 L89,91 L92,94 L96,88 L100,93 L104,88 L108,94 L111,91 L111,99 Z" fill="#cc1100"/>
+            <rect x="88" y="97" width="24" height="4" rx="1" fill="#cc1100"/>
+            <!-- Scepter -->
+            <circle cx="100" cy="103" r="4" fill="none" stroke="#cc1100" stroke-width="1.2"/>
+            <line x1="100" y1="107" x2="100" y2="136" stroke="#cc1100" stroke-width="2"/>
+            <line x1="94"  y1="114" x2="106" y2="114" stroke="#cc1100" stroke-width="1.5"/>
+            <!-- Stat line -->
+            <line x1="86" y1="143" x2="114" y2="143" stroke="#8b6010" stroke-width="0.8" opacity="0.65"/>
+            <!-- Arms -->
+            <path d="M85,101 Q76,99 71,96 L69,100 Q74,104 84,107 Z" fill="#c9a84c"/>
+            <path d="M115,101 Q124,99 129,96 L131,100 Q126,104 116,107 Z" fill="#c9a84c"/>
+            <!-- Left leg -->
+            <path d="M91,151 Q87,162 85,167 L91,169 Q93,163 97,152 Z" fill="#c9a84c"/>
+            <path d="M85,167 Q82,172 81,175 L89,175 L91,169 Z" fill="#c9a84c"/>
+            <!-- Right leg -->
+            <path d="M109,151 Q113,162 115,167 L109,169 Q107,163 103,152 Z" fill="#c9a84c"/>
+            <path d="M115,167 Q118,172 119,175 L111,175 L109,169 Z" fill="#c9a84c"/>
           </g>
           <line x1="207" y1="20" x2="207" y2="152" stroke="#c9a84c" stroke-width="1.5" opacity="0.35"/>
           <polygon points="207,85 212,92 207,99 202,92" fill="#c9a84c" opacity="0.45"/>
