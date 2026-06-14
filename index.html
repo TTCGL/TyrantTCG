@@ -1614,7 +1614,7 @@
   <header>
     <div class="header-inner">
       <a href="#home" class="logo">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 172" width="700" height="172"
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 202 172" width="202" height="172"
              class="logo-img" overflow="visible" role="img" aria-label="Tyrant TCG Limited">
           <defs>
             <filter id="he-stone" x="-8%" y="-10%" width="116%" height="120%">
@@ -1627,14 +1627,12 @@
               <stop offset="100%" stop-color="#8b6010"/>
             </linearGradient>
           </defs>
-          <!-- Solid gold castle: 3 merlons (8–52, 78–122, 148–192), crennel y=55, tops y=15 -->
           <g filter="url(#he-stone)">
             <path d="M8,172 L8,15 L52,15 L52,55 L78,55 L78,15 L122,15 L122,55 L148,55 L148,15 L192,15 L192,172 Z"
                   fill="url(#he-gold)" stroke="#f8eaa0" stroke-width="1.5"/>
             <line x1="8" y1="90" x2="192" y2="90" stroke="#8b6010" stroke-width="1" opacity="0.5"/>
             <line x1="8" y1="130" x2="192" y2="130" stroke="#8b6010" stroke-width="1" opacity="0.5"/>
             <path d="M90,158 L90,108 Q100,82 110,108 L110,158 Z" fill="#0d0a05" opacity="0.6"/>
-            <!-- Crown: 3 peaks above center merlon (cx=100) -->
             <path d="M66,15 L66,3 L80,10 L100,0 L120,10 L134,3 L134,15 Z"
                   fill="#ffe070" stroke="#f8eaa0" stroke-width="1.2"/>
             <ellipse cx="100" cy="1"  rx="4"   ry="3.5" fill="#cc1100"/>
@@ -1642,13 +1640,6 @@
             <ellipse cx="120" cy="10" rx="2.8" ry="2.5" fill="#cc1100"/>
             <rect x="8" y="165" width="184" height="7" rx="1" fill="#880000"/>
           </g>
-          <line x1="207" y1="20" x2="207" y2="152" stroke="#c9a84c" stroke-width="1.5" opacity="0.35"/>
-          <polygon points="207,85 212,92 207,99 202,92" fill="#c9a84c" opacity="0.45"/>
-          <text x="224" y="90" font-family="Cinzel, Georgia, serif" font-weight="900" font-size="64"
-                fill="url(#he-gold)" letter-spacing="2">TYRANT TCG</text>
-          <line x1="224" y1="103" x2="695" y2="103" stroke="#c9a84c" stroke-width="0.8" opacity="0.2"/>
-          <text x="224" y="138" font-family="Cinzel, Georgia, serif" font-weight="700" font-size="26"
-                fill="#c9a84c" opacity="0.85" letter-spacing="12">LIMITED</text>
         </svg>
       </a>
       <div class="construction-notice">
@@ -1730,33 +1721,53 @@
         <rect x="88" y="283" width="404" height="7" rx="1" fill="#880000"/>
       </g>
 
-      <!-- LEFT CARD WARRIOR — card IS the body, arms + legs only -->
+      <!-- LEFT CARD WARRIOR — Monster card body -->
       <g filter="url(#cl-stone)">
         <rect x="13" y="150" width="60" height="88" rx="6" fill="url(#cl-gold)" stroke="#f8eaa0" stroke-width="2"/>
-        <text x="43" y="204" font-size="30" text-anchor="middle" fill="#14100a" font-family="Georgia,serif">&#9824;</text>
+        <!-- Monster card artwork: horned creature face -->
+        <path d="M33,170 L25,156 L39,167" fill="#14100a"/>
+        <path d="M53,170 L61,156 L47,167" fill="#14100a"/>
+        <path d="M33,168 L25,180 L25,198 L31,208 L43,212 L55,208 L61,198 L61,180 L53,168 Z"
+              fill="none" stroke="#14100a" stroke-width="2"/>
+        <circle cx="36" cy="184" r="4" fill="#cc1100"/>
+        <circle cx="50" cy="184" r="4" fill="#cc1100"/>
+        <circle cx="36" cy="184" r="2" fill="#ff2200"/>
+        <circle cx="50" cy="184" r="2" fill="#ff2200"/>
+        <path d="M31,208 L35,216 L39,208 L43,216 L47,208 L51,216 L55,208" fill="none" stroke="#14100a" stroke-width="1.8"/>
         <!-- Shield arm (left, away from castle) -->
         <path d="M13,178 Q-2,174 -10,167" stroke="#c9a84c" stroke-width="5" fill="none" stroke-linecap="round"/>
         <path d="M-10,159 L-23,159 L-23,175 L-16,183 L-10,175 Z" fill="#c9a84c" stroke="#f8eaa0" stroke-width="1.5"/>
-        <!-- Strike arm (right, toward castle) + card weapon -->
+        <!-- Strike arm (right, toward castle) + ATK card weapon -->
         <path d="M73,178 Q82,171 90,158" stroke="#c9a84c" stroke-width="5" fill="none" stroke-linecap="round"/>
         <g transform="rotate(-52, 90, 150)">
           <rect x="78" y="133" width="24" height="34" rx="3" fill="#14100a" stroke="#c9a84c" stroke-width="1.5"/>
-          <text x="90" y="152" font-size="10" text-anchor="middle" fill="#cc1100" font-family="Georgia,serif">&#9829;</text>
+          <text x="90" y="146" font-size="7" text-anchor="middle" fill="#f8d060" font-family="Cinzel,Georgia,serif" font-weight="700">ATK</text>
+          <path d="M90,149 L91.8,154.5 L97.5,154.5 L93,158 L94.8,163.5 L90,160 L85.2,163.5 L87,158 L82.5,154.5 L88.2,154.5 Z"
+                fill="#f8d060"/>
         </g>
         <!-- Legs -->
         <path d="M30,238 Q22,261 16,283" stroke="#c9a84c" stroke-width="5" fill="none" stroke-linecap="round"/>
         <path d="M56,238 Q63,261 68,283" stroke="#c9a84c" stroke-width="5" fill="none" stroke-linecap="round"/>
       </g>
 
-      <!-- RIGHT CARD WARRIOR — card IS the body, arms + legs only -->
+      <!-- RIGHT CARD WARRIOR — Spell card body -->
       <g filter="url(#cl-stone)">
         <rect x="507" y="150" width="60" height="88" rx="6" fill="url(#cl-gold)" stroke="#f8eaa0" stroke-width="2"/>
-        <text x="537" y="204" font-size="30" text-anchor="middle" fill="#cc1100" font-family="Georgia,serif">&#9829;</text>
-        <!-- Strike arm (left, toward castle) + card weapon -->
+        <!-- Spell card artwork: lightning bolt -->
+        <path d="M545,162 L528,192 L539,192 L528,222 L554,190 L543,190 L554,162 Z"
+              fill="none" stroke="#14100a" stroke-width="2.2"/>
+        <line x1="515" y1="174" x2="523" y2="180" stroke="#14100a" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="512" y1="190" x2="522" y2="190" stroke="#14100a" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="515" y1="206" x2="523" y2="200" stroke="#14100a" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="565" y1="174" x2="557" y2="180" stroke="#14100a" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="568" y1="190" x2="558" y2="190" stroke="#14100a" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="565" y1="206" x2="557" y2="200" stroke="#14100a" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Strike arm (left, toward castle) + SPELL card weapon -->
         <path d="M507,178 Q498,171 490,158" stroke="#c9a84c" stroke-width="5" fill="none" stroke-linecap="round"/>
         <g transform="rotate(52, 490, 150)">
           <rect x="478" y="133" width="24" height="34" rx="3" fill="#14100a" stroke="#c9a84c" stroke-width="1.5"/>
-          <text x="490" y="152" font-size="10" text-anchor="middle" fill="#c9a84c" font-family="Georgia,serif">&#9824;</text>
+          <text x="490" y="146" font-size="7" text-anchor="middle" fill="#f8d060" font-family="Cinzel,Georgia,serif" font-weight="700">SPL</text>
+          <path d="M490,151 L488,157 L491,157 L488,164 L494,156 L491,156 L494,151 Z" fill="#f8d060"/>
         </g>
         <!-- Shield arm (right, away from castle) -->
         <path d="M567,178 Q578,174 590,167" stroke="#c9a84c" stroke-width="5" fill="none" stroke-linecap="round"/>
